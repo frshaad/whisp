@@ -2,7 +2,7 @@ import app from './app';
 import connectDB from './utils/connectDB';
 import log from './utils/logger';
 
-const PORT = process.env.PORT || 4001;
+const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, async () => {
     try {
