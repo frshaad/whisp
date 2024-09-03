@@ -1,3 +1,5 @@
+import { Response } from 'express';
+
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
 const fullNameRegex = /^[a-zA-Z\s]{1,50}$/;
@@ -34,4 +36,19 @@ export const validateFullName = (fullName: string): [boolean, string] => {
     ];
   }
   return [true, ''];
+};
+
+export const handleValidation = (
+  res: Response,
+  validations: { isValid: [boolean, string]; field: string }[],
+) => {
+  for (const { isValid, field } of validations) {
+    const [isFieldValid, validationMsg] = isValid;
+    if (!isFieldValid) {
+      return res.status(400).json({
+        status: 'failed',
+        message: `${field} validation failed: ${validationMsg}`,
+      });
+    }
+  }
 };

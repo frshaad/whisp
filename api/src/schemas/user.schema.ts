@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 
 export const userSchema = new mongoose.Schema(
   {
@@ -57,3 +57,18 @@ export const userSchema = new mongoose.Schema(
   },
   { timestamps: true },
 );
+
+export type UserType = Document & {
+  username: string;
+  fullname: string;
+  email: string;
+  password: string;
+  followers: mongoose.Types.ObjectId[];
+  following: mongoose.Types.ObjectId[];
+  profileImg?: string;
+  coverImg?: string;
+  bio?: string;
+  link?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+};
