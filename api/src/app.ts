@@ -1,7 +1,9 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import authRouter from './routes/auth.router';
 import cookieParser from 'cookie-parser';
+
+import authRouter from './routes/auth.route';
+import userRouter from './routes/user.route';
 
 dotenv.config();
 
@@ -12,5 +14,6 @@ app.use(express.urlencoded({ extended: true })); // To parse form data(urlencode
 app.use(cookieParser());
 
 app.use('/api/auth', authRouter);
+app.use('/api/users', userRouter);
 
 export default app;
