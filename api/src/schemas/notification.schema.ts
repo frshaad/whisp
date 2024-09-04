@@ -30,6 +30,4 @@ export type NotificationType = mongoose.Document & {
   to: mongoose.Types.ObjectId;
   type: 'follow' | 'like';
   isRead?: boolean;
-  createdAt?: Date;
-  updatedAt?: Date;
 };

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import User from '../models/user.model';
 import { Types } from 'mongoose';
+import Notification from '../models/notification.model';
 
 export const getUserProfile = async (req: Request, res: Response) => {
   try {
@@ -54,14 +55,23 @@ export const followUnfollowUser = async (req: Request, res: Response) => {
       res.status(200).json({
         status: 'success',
         message: 'User is successfully unfollowed',
+        targetUserId: targetUser._id,
       });
     } else {
       await User.findByIdAndUpdate(id, { $push: { followers: currentUserId } });
       await User.findByIdAndUpdate(currentUserId, { $push: { following: id } });
       // Send notification
+      const newNotification = new Notification({
+        from: currentUserId,
+        to: id,
+        type: 'follow',
+      });
+      await newNotification.save();
+
       res.status(200).json({
         status: 'success',
         message: 'User is successfully followed',
+        targetUserId: targetUser._id,
       });
     }
   } catch (error) {
