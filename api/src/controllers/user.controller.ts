@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
-import User from '../models/user.model';
 import { Types } from 'mongoose';
+import User from '../models/user.model';
 import Notification from '../models/notification.model';
+import { handleImageUpload, handlePasswordUpdate } from '../utils/helper';
+import { UserType } from '../schemas/user.schema';
 
 export const getUserProfile = async (req: Request, res: Response) => {
   try {
@@ -76,6 +78,121 @@ export const followUnfollowUser = async (req: Request, res: Response) => {
     }
   } catch (error) {
     console.log('Error in get user profile controller', error);
+    res
+      .status(500)
+      .json({ status: 'failed', message: 'Internal server error' });
+  }
+};
+
+export const getSuggestedUsers = async (req: Request, res: Response) => {
+  try {
+    const currentUserId = req.user?._id;
+
+    const currentUserFollowing =
+      await User.findById(currentUserId).select('following');
+
+    const users = await User.aggregate([
+      {
+        $match: {
+          _id: { $ne: currentUserId },
+        },
+      },
+      {
+        $sample: { size: 10 },
+      },
+    ]);
+
+    const filteredUsers = users.filter(
+      (user) => !currentUserFollowing?.following.includes(user._id),
+    );
+    const suggestedUsers = filteredUsers.slice(0.4);
+    suggestedUsers.forEach((user) => (user.password = null));
+
+    res.status(200).json({ status: 'success', suggestedUsers });
+  } catch (error) {
+    console.log('Error in get suggested users controller', error);
+    res
+      .status(500)
+      .json({ status: 'failed', message: 'Internal server error' });
+  }
+};
+
+export const updateUser = async (req: Request, res: Response) => {
+  try {
+    const {
+      fullname,
+      email,
+      username,
+      currentPassword,
+      newPassword,
+      bio,
+      link,
+      profileImg,
+      coverImg,
+    } = req.body;
+
+    const userId = req.user?._id;
+    const user = await User.findById(userId);
+
+    // let { profileImg, coverImg } = req.body;
+
+    // const userId = req.user?._id;
+    // let user = await User.findById(userId);
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ status: 'failed', message: 'User not found' });
+    }
+
+    if (
+      (currentPassword && !newPassword) ||
+      (!currentPassword && newPassword)
+    ) {
+      return res.status(400).json({
+        status: 'failed',
+        message: 'Please provide both current and new password',
+      });
+    }
+
+    // Handle password update if both current and new passwords are provided
+    if (currentPassword && newPassword) {
+      try {
+        await handlePasswordUpdate(user, currentPassword, newPassword);
+      } catch (error) {
+        return res.status(400).json({
+          status: 'failed',
+          message: `${error}`,
+        });
+      }
+    }
+
+    const updatedFields: Partial<UserType> = {};
+
+    if (profileImg) {
+      updatedFields.profileImg = await handleImageUpload(
+        user.profileImg,
+        profileImg,
+      );
+    }
+
+    if (coverImg) {
+      updatedFields.coverImg = await handleImageUpload(user.coverImg, coverImg);
+    }
+
+    if (fullname) updatedFields.fullname = fullname;
+    if (email) updatedFields.email = email;
+    if (username) updatedFields.username = username;
+    if (bio) updatedFields.bio = bio;
+    if (link) updatedFields.link = link;
+
+    Object.assign(user, updatedFields);
+
+    const updatedUser = await user.save();
+    updatedUser.password = '';
+    return res.status(201).json({ status: 'success', user: updatedUser });
+  } catch (error) {
+    console.log('Error in update user controller', error);
     res
       .status(500)
       .json({ status: 'failed', message: 'Internal server error' });
