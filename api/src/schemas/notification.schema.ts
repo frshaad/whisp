@@ -26,8 +26,8 @@ export const notificationSchema = new mongoose.Schema(
 );
 
 export type NotificationType = mongoose.Document & {
-  from: mongoose.Types.ObjectId;
-  to: mongoose.Types.ObjectId;
+  from: mongoose.Schema.Types.ObjectId;
+  to: mongoose.Schema.Types.ObjectId;
   type: 'follow' | 'like';
   isRead?: boolean;
 };

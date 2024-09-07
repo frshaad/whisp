@@ -63,8 +63,8 @@ export type UserType = Document & {
   fullname: string;
   email: string;
   password: string;
-  followers: mongoose.Types.ObjectId[];
-  following: mongoose.Types.ObjectId[];
+  followers: mongoose.Schema.Types.ObjectId[];
+  following: mongoose.Schema.Types.ObjectId[];
   profileImg?: string;
   coverImg?: string;
   bio?: string;

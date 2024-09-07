@@ -6,12 +6,12 @@ import { validatePassword } from './validator-utils';
 import { UserType } from '../schemas/user.schema';
 
 export const createUserResponse = (user: {
-  _id: mongoose.Types.ObjectId;
+  _id: mongoose.Schema.Types.ObjectId;
   fullname: string;
   username: string;
   email: string;
-  followers: mongoose.Types.ObjectId[];
-  following: mongoose.Types.ObjectId[];
+  followers: mongoose.Schema.Types.ObjectId[];
+  following: mongoose.Schema.Types.ObjectId[];
   profileImg: string;
   coverImg: string;
   createdAt: NativeDate;

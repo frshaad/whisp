@@ -7,7 +7,7 @@ declare global {
   namespace Express {
     export interface Request {
       user?: UserType;
-      userId?: mongoose.Types.ObjectId;
+      userId?: mongoose.Schema.Types.ObjectId;
     }
   }
 }
