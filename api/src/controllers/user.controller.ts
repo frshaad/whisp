@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Types } from 'mongoose';
+import mongoose from 'mongoose';
 import User from '../models/user.model';
 import Notification from '../models/notification.model';
 import { handleImageUpload, handlePasswordUpdate } from '../utils/helper';
@@ -28,7 +28,9 @@ export const getUserProfile = async (req: Request, res: Response) => {
 export const followUnfollowUser = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const currentUserId = (req.user?._id as string).toString();
+    const currentUserId = (
+      req.user?._id as mongoose.Schema.Types.ObjectId
+    ).toString();
 
     if (currentUserId === id) {
       return res.status(400).json({
@@ -47,8 +49,8 @@ export const followUnfollowUser = async (req: Request, res: Response) => {
       });
     }
 
-    const isInFollowing = currentUser?.following.includes(
-      id as unknown as Types.ObjectId,
+    const isInFollowing = currentUser?.following.some((followId) =>
+      followId.equals(id),
     );
 
     if (isInFollowing) {
@@ -133,11 +135,6 @@ export const updateUser = async (req: Request, res: Response) => {
 
     const userId = req.user?._id;
     const user = await User.findById(userId);
-
-    // let { profileImg, coverImg } = req.body;
-
-    // const userId = req.user?._id;
-    // let user = await User.findById(userId);
 
     if (!user) {
       return res

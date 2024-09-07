@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 
 export const generateTokenAndSetCookie = (
-  userId: mongoose.Schema.Types.ObjectId,
+  userId: mongoose.Types.ObjectId,
   res: Response,
 ) => {
   if (!process.env.JWT_SECRET) {
