@@ -163,3 +163,18 @@ export const commentOnPost = async (req: Request, res: Response) => {
       .json({ status: 'failed', message: 'Internal server error' });
   }
 };
+
+export const getAllPosts = async (req: Request, res: Response) => {
+  try {
+    const posts = await Post.find()
+      .sort({ createAt: -1 })
+      .populate('user', '-password')
+      .populate('comments.user', '-password');
+    res.status(200).json({ status: 'success', count: posts.length, posts });
+  } catch (error) {
+    console.log('Error in get all posts controller', error);
+    res
+      .status(500)
+      .json({ status: 'failed', message: 'Internal server error' });
+  }
+};
