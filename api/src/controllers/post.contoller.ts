@@ -62,6 +62,10 @@ export const likeUnlikePost = async (req: Request, res: Response) => {
         { _id: postId },
         { $pull: { likes: currentUserId } },
       );
+      await User.updateOne(
+        { _id: currentUserId },
+        { $pull: { likedPosts: postId } },
+      );
       res.status(200).json({
         status: 'success',
         message: 'Post successfully unliked',
@@ -69,8 +73,11 @@ export const likeUnlikePost = async (req: Request, res: Response) => {
       });
     } else {
       post.likes.push(currentUserId);
+      await User.updateOne(
+        { _id: currentUserId },
+        { $push: { likedPosts: postId } },
+      );
       await post.save();
-
       const notification = new Notification({
         from: currentUserId,
         to: post.user,
@@ -173,6 +180,87 @@ export const getAllPosts = async (req: Request, res: Response) => {
     res.status(200).json({ status: 'success', count: posts.length, posts });
   } catch (error) {
     console.log('Error in get all posts controller', error);
+    res
+      .status(500)
+      .json({ status: 'failed', message: 'Internal server error' });
+  }
+};
+
+export const getLikedPosts = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        status: 'failed',
+        message: 'User not found',
+      });
+    }
+
+    const likedPosts = await Post.find({
+      _id: { $in: user.likedPosts },
+    })
+      .populate('user', '-password')
+      .populate('comments.user', '-password');
+
+    res.status(200).json({ status: 'success', likedPosts });
+  } catch (error) {
+    console.log('Error in liked posts controller', error);
+    res
+      .status(500)
+      .json({ status: 'failed', message: 'Internal server error' });
+  }
+};
+
+export const getFollowingPosts = async (req: Request, res: Response) => {
+  try {
+    const currentUserId = req.user?._id as mongoose.Types.ObjectId;
+    const user = await User.findById(currentUserId);
+    if (!user) {
+      return res.status(404).json({
+        status: 'failed',
+        message: 'User not found',
+      });
+    }
+
+    const { following } = user;
+    const feedPosts = await Post.find({ user: { $in: following } })
+      .sort({
+        createdAt: -1,
+      })
+      .populate('user', '-password')
+      .populate('comments.user', '-password');
+
+    res.status(200).json({ status: 'success', feedPosts });
+  } catch (error) {
+    console.log('Error in get following posts controller', error);
+    res
+      .status(500)
+      .json({ status: 'failed', message: 'Internal server error' });
+  }
+};
+
+export const getUserPosts = async (req: Request, res: Response) => {
+  try {
+    const { username } = req.params;
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({
+        status: 'failed',
+        message: 'User not found',
+      });
+    }
+
+    const posts = await Post.find({ user: user._id })
+      .sort({
+        createdAt: -1,
+      })
+      .populate('user', '-password')
+      .populate('comments.user', '-password');
+
+    res.status(200).json({ status: 'success', posts });
+  } catch (error) {
+    console.log('Error in get following posts controller', error);
     res
       .status(500)
       .json({ status: 'failed', message: 'Internal server error' });
