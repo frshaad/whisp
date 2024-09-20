@@ -21,13 +21,13 @@
   "license": "MIT",
   "dependencies": {
     "bcrypt": "^5.1.1",
-    "cloudinary": "^2.4.0",
+    "cloudinary": "^2.5.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2",
+    "express": "^4.21.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.6.1",
+    "mongoose": "^8.6.3",
     "pino": "^9.4.0",
     "pino-pretty": "^11.2.2"
   },
@@ -35,18 +35,18 @@
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.7",
     "@types/express": "^4.17.21",
-    "@types/jsonwebtoken": "^9.0.6",
-    "@typescript-eslint/eslint-plugin": "^8.4.0",
-    "@typescript-eslint/parser": "^8.4.0",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@typescript-eslint/eslint-plugin": "^8.6.0",
+    "@typescript-eslint/parser": "^8.6.0",
     "eslint": "8",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-n": "16",
     "eslint-plugin-promise": "6",
-    "husky": "^9.1.5",
+    "husky": "^9.1.6",
     "lint-staged": "^15.2.10",
     "prettier": "^3.3.3",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.5.4"
+    "typescript": "^5.6.2"
   }
 }
