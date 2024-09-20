@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "start": "concurrently \"pnpm run server\" \"pnpm run client\"",
+    "server": "cd api && pnpm dev",
+    "client": "cd client && pnpm dev"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.1"
+  }
+}
