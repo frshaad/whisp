@@ -1,12 +1,12 @@
-import { Inter, Roboto } from 'next/font/google';
+import { Inter, Pacifico } from 'next/font/google';
 
 export const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
 });
 
-export const roboto = Roboto({
+export const pacifico = Pacifico({
   subsets: ['latin'],
-  weight: ['400', '700'],
+  weight: ['400'],
   display: 'swap',
 });
