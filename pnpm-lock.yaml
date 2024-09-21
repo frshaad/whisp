@@ -12,18 +12,11 @@ importers:
         specifier: ^5.0.7
         version: 5.0.7
     devDependencies:
-      '@types/nanoid':
-        specifier: ^3.0.0
-        version: 3.0.0
       concurrently:
         specifier: ^9.0.1
         version: 9.0.1
 
 packages:
-
-  '@types/nanoid@3.0.0':
-    resolution: {integrity: sha512-UXitWSmXCwhDmAKe7D3hNQtQaHeHt5L8LO1CB8GF8jlYVzOv5cBWDNqiJ+oPEWrWei3i3dkZtHY/bUtd0R/uOQ==}
-    deprecated: This is a stub types definition. nanoid provides its own type definitions, so you do not need this installed.
 
   ansi-regex@5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
@@ -130,10 +123,6 @@ packages:
     engines: {node: '>=12'}
 
 snapshots:
-
-  '@types/nanoid@3.0.0':
-    dependencies:
-      nanoid: 5.0.7
 
   ansi-regex@5.0.1: {}
 

@@ -1,52 +1,17 @@
-import { TypographyH2, TypographyH4 } from '@/components/shared/typography';
+import Post from '@/components/post';
 
 export default function HomePage() {
   return (
-    <section className="container mt-6 flex flex-col items-center justify-center gap-4">
-      <TypographyH2>Home Page</TypographyH2>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-      <TypographyH4>Welcome</TypographyH4>
-    </section>
+    <div className="mt-10 space-y-4">
+      <Post />
+      <Post />
+      <Post />
+      <Post />
+      <Post />
+      <Post />
+      <Post />
+      <Post />
+      <Post />
+    </div>
   );
 }
