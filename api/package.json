@@ -1,20 +1,13 @@
 {
-  "name": "mern-twitter",
-  "version": "1.0.0",
+  "name": "whisp-api",
+"version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "lint": "eslint . --fix",
     "format": "prettier . --write",
-    "prepare": "husky",
     "build": "tsc"
-  },
-  "lint-staged": {
-    "*.ts": [
-      "prettier --write",
-      "eslint --fix"
-    ]
   },
   "keywords": [],
   "author": "Farshad Hatami",
@@ -38,15 +31,13 @@
     "@types/jsonwebtoken": "^9.0.7",
     "@typescript-eslint/eslint-plugin": "^8.6.0",
     "@typescript-eslint/parser": "^8.6.0",
-    "eslint": "8",
+    "eslint": "^8",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-n": "16",
     "eslint-plugin-promise": "6",
-    "husky": "^9.1.6",
-    "lint-staged": "^15.2.10",
-    "prettier": "^3.3.3",
     "ts-node-dev": "^2.0.0",
+     "prettier": "^3.3.3",
     "typescript": "^5.6.2"
   }
 }

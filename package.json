@@ -1,8 +1,13 @@
 {
+  "name": "whisp",
+  "version": "0.1.0",
   "scripts": {
     "start": "concurrently \"pnpm run server\" \"pnpm run client\"",
     "server": "cd api && pnpm dev",
-    "client": "cd client && pnpm dev"
+    "client": "cd client && pnpm dev",
+    "install:all": "pnpm recursive install",
+    "lint": "pnpm recursive run lint",
+    "format": "pnpm recursive run format"
   },
   "devDependencies": {
     "concurrently": "^9.0.1"
