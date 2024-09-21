@@ -1,6 +1,6 @@
 {
   "name": "whisp-api",
-"version": "0.1.0",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -37,7 +37,7 @@
     "eslint-plugin-n": "16",
     "eslint-plugin-promise": "6",
     "ts-node-dev": "^2.0.0",
-     "prettier": "^3.3.3",
+    "prettier": "^3.3.3",
     "typescript": "^5.6.2"
   }
 }

@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import authMiddleware from '../middlewares/auth.middleware';
 import {
   commentOnPost,
   createPost,
@@ -9,17 +8,26 @@ import {
   getLikedPosts,
   getUserPosts,
   likeUnlikePost,
-} from '../controllers/post.contoller';
+} from '../controllers/post.controller';
+import authMiddleware from '../middlewares/auth.middleware';
 
 const router = Router();
 
-router.route('/').get(authMiddleware, getAllPosts);
-router.route('/:username').get(authMiddleware, getUserPosts);
-router.route('/following').get(authMiddleware, getFollowingPosts);
-router.route('/create').post(authMiddleware, createPost);
-router.route('/likes/:userId').get(authMiddleware, getLikedPosts);
-router.route('/like/:postId').post(authMiddleware, likeUnlikePost);
-router.route('/comment/:postId').post(authMiddleware, commentOnPost);
-router.route('/:postId').delete(authMiddleware, deletePost);
+router.use(authMiddleware);
+
+// Posts related routes
+router.route('/').get(getAllPosts).post(createPost);
+
+// Get posts by specific user or following
+router.get('/:username', getUserPosts);
+router.get('/following', getFollowingPosts);
+
+// Like/unlike and get liked posts
+router.route('/like/:postId').post(likeUnlikePost);
+router.route('/likes/:userId').get(getLikedPosts);
+
+// Comment and delete posts
+router.route('/comment/:postId').post(commentOnPost);
+router.route('/:postId').delete(deletePost);
 
 export default router;

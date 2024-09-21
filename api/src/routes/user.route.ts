@@ -1,17 +1,22 @@
 import { Router } from 'express';
-import authMiddleware from '../middlewares/auth.middleware';
 import {
   followUnfollowUser,
   getSuggestedUsers,
   getUserProfile,
   updateUser,
 } from '../controllers/user.controller';
+import authMiddleware from '../middlewares/auth.middleware';
 
 const router = Router();
 
-router.route('/profile/:username').get(authMiddleware, getUserProfile);
-router.route('/follow/:id').post(authMiddleware, followUnfollowUser);
-router.route('/suggested').get(authMiddleware, getSuggestedUsers);
-router.route('/update').post(authMiddleware, updateUser);
+router.use(authMiddleware);
+
+// User profile routes
+router.route('/profile/:username').get(getUserProfile);
+router.route('/update').post(updateUser);
+
+// Follow/unfollow and suggested users routes
+router.route('/follow/:id').post(followUnfollowUser);
+router.route('/suggested').get(getSuggestedUsers);
 
 export default router;
