@@ -2,6 +2,7 @@ import { Router } from 'express';
 import {
   getNotifications,
   deleteNotifications,
+  deleteNotification,
 } from '../controllers/notification.controller';
 import authMiddleware from '../middlewares/auth.middleware';
 
