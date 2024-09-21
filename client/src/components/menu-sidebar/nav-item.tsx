@@ -18,14 +18,17 @@ export default function NavItem({ icon: Icon, label, path, ...props }: Props) {
     <li className={cn('flex items-center', props.className)} {...props}>
       <Dot
         size={30}
-        className={cn('opacity-0 transition', isActiveLink && 'opacity-100')}
+        className={cn(
+          'text-primary opacity-0 transition',
+          isActiveLink && 'opacity-100',
+        )}
       />
       <Link href={path} className="flex w-full items-center">
         <Button
           variant="ghost"
           className={cn(
             'gap-3 text-muted-foreground',
-            isActiveLink && 'text-foreground',
+            isActiveLink && 'text-primary hover:text-primary',
           )}
         >
           <Icon size={22} />

@@ -1,4 +1,5 @@
-import { Heart, MessageCircle } from 'lucide-react';
+import { EllipsisVertical, Heart, MessageCircle, Repeat2 } from 'lucide-react';
+import Link from 'next/link';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -10,18 +11,44 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { cn } from '@/lib/utils';
 
 export default function Post() {
+  const isLiked = true;
+
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center gap-4">
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
-        <div className="space-y-0.5">
-          <CardTitle>Farshad Hatami</CardTitle>
-          <CardDescription>@farshad</CardDescription>
+      <CardHeader className="flex flex-row justify-between">
+        <Link href="/" className="flex items-center gap-4">
+          <Avatar>
+            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+          <div className="space-y-0.5">
+            <div className="flex items-center gap-3">
+              <CardTitle>Farshad Hatami</CardTitle>
+            </div>
+            <CardDescription>@farshad</CardDescription>
+          </div>
+        </Link>
+        <div className="flex items-center gap-4 text-muted-foreground">
+          <span className="text-sm">13h</span>
+          <DropdownMenu>
+            <DropdownMenuTrigger className="outline-none">
+              <EllipsisVertical size={18} />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem className="cursor-pointer">
+                Block User
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </CardHeader>
 
@@ -36,12 +63,21 @@ export default function Post() {
 
       <CardFooter className="gap-8 text-xs text-muted-foreground">
         <Button className="flex items-center gap-2" size="sm" variant="ghost">
-          <Heart size={16} />
+          <Heart
+            size={17}
+            className={cn('transition', isLiked && 'fill-primary text-primary')}
+          />
           <span>143</span>
         </Button>
+
         <Button className="flex items-center gap-2" size="sm" variant="ghost">
-          <MessageCircle size={16} />
+          <MessageCircle size={17} />
           <span>18</span>
+        </Button>
+
+        <Button className="flex items-center gap-2" size="sm" variant="ghost">
+          <Repeat2 size={17} />
+          <span>6</span>
         </Button>
       </CardFooter>
     </Card>
