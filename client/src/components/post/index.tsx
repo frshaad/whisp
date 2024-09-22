@@ -1,4 +1,10 @@
-import { EllipsisVertical, Heart, MessageCircle, Repeat2 } from 'lucide-react';
+import {
+  Bookmark,
+  EllipsisVertical,
+  Heart,
+  MessageCircle,
+  Repeat2,
+} from 'lucide-react';
 
 import UserBadge from '@/components/shared/user-badge';
 import { Button } from '@/components/ui/button';
@@ -25,6 +31,8 @@ type Props = {
 
 export default function Post({ user, post }: Props) {
   const isLiked = true;
+  const isSaved = true;
+  const isReposted = false;
 
   return (
     <Card>
@@ -47,23 +55,37 @@ export default function Post({ user, post }: Props) {
 
       <CardContent>{post.content && <p>{post.content}</p>}</CardContent>
 
-      <CardFooter className="gap-8 text-xs text-muted-foreground">
+      <CardFooter className="justify-between text-xs text-muted-foreground">
+        <div className="flex items-center gap-8">
+          <Button className="flex items-center gap-2" size="sm" variant="ghost">
+            <Heart
+              size={17}
+              className={cn(
+                'transition',
+                isLiked && 'fill-primary text-primary',
+              )}
+            />
+            <span>{post.likes.length}</span>
+          </Button>
+
+          <Button className="flex items-center gap-2" size="sm" variant="ghost">
+            <MessageCircle size={17} />
+            <span>{post.comments.length}</span>
+          </Button>
+
+          <Button className="flex items-center gap-2" size="sm" variant="ghost">
+            <Repeat2
+              size={17}
+              className={cn('transition', isReposted && 'text-primary')}
+            />
+            <span>{post.reposts.length}</span>
+          </Button>
+        </div>
         <Button className="flex items-center gap-2" size="sm" variant="ghost">
-          <Heart
+          <Bookmark
             size={17}
-            className={cn('transition', isLiked && 'fill-primary text-primary')}
+            className={cn('transition', isSaved && 'fill-primary text-primary')}
           />
-          <span>{post.likes.length}</span>
-        </Button>
-
-        <Button className="flex items-center gap-2" size="sm" variant="ghost">
-          <MessageCircle size={17} />
-          <span>{post.comments.length}</span>
-        </Button>
-
-        <Button className="flex items-center gap-2" size="sm" variant="ghost">
-          <Repeat2 size={17} />
-          <span>{post.reposts.length}</span>
         </Button>
       </CardFooter>
     </Card>

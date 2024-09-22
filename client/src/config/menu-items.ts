@@ -11,5 +11,5 @@ export const MENU_ITEMS: MenuItem[] = [
     path: '/notifications',
   },
   { id: 'bookmarks', icon: Bookmark, label: 'Bookmarks', path: '/bookmarks' },
-  { id: 'profile', icon: User, label: 'Profile', path: '/profile' },
+  { id: 'profile', icon: User, label: 'Profile', path: '/profile/farshad' },
 ];
