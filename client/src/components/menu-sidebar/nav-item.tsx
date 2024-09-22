@@ -27,12 +27,17 @@ export default function NavItem({ icon: Icon, label, path, ...props }: Props) {
         <Button
           variant="ghost"
           className={cn(
-            'gap-3 text-muted-foreground',
+            'w-full justify-start gap-3 text-muted-foreground',
             isActiveLink && 'text-primary hover:text-primary',
           )}
         >
           <Icon size={22} />
           <span>{label}</span>
+          {label === 'Notifications' && (
+            <span className="flex size-5 items-center justify-center rounded-full bg-muted p-1 text-xs text-muted-foreground">
+              4
+            </span>
+          )}
         </Button>
       </Link>
     </li>

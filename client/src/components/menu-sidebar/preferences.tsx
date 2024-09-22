@@ -18,7 +18,10 @@ export default function Preferences() {
       <DialogTrigger asChild>
         <li className="flex items-center">
           <Dot size={30} className="opacity-0" />
-          <Button variant="ghost" className="gap-3 text-muted-foreground">
+          <Button
+            variant="ghost"
+            className="w-full justify-start gap-3 text-muted-foreground"
+          >
             <Bolt size={22} />
             <span>Settings</span>
           </Button>
