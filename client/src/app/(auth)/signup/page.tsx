@@ -13,24 +13,33 @@ export default function SignupPage() {
           Enter your information to create an account
         </p>
       </div>
-      <div className="grid gap-4">
-        <div className="grid grid-cols-2 gap-4">
-          <div className="grid gap-2">
-            <Label htmlFor="first-name">First name</Label>
-            <Input id="first-name" placeholder="Max" required />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="last-name">Last name</Label>
-            <Input id="last-name" placeholder="Robinson" required />
-          </div>
+      <form className="grid gap-4">
+        <div className="grid gap-2">
+          <Label htmlFor="fullname">Full name</Label>
+          <Input
+            id="fullname"
+            name="fullname"
+            placeholder="John Doe"
+            required
+          />
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor="username">Username</Label>
+          <Input id="username" name="username" placeholder="johndoe" required />
         </div>
         <div className="grid gap-2">
           <Label htmlFor="email">Email</Label>
-          <Input id="email" type="email" placeholder="m@example.com" required />
+          <Input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="johndoe@example.com"
+            required
+          />
         </div>
         <div className="grid gap-2">
           <Label htmlFor="password">Password</Label>
-          <Input id="password" type="password" />
+          <Input id="password" name="password" type="password" />
         </div>
         <Button type="submit" className="w-full">
           Create an account
@@ -38,9 +47,9 @@ export default function SignupPage() {
         <Button variant="outline" className="w-full">
           Sign up with GitHub
         </Button>
-      </div>
+      </form>
       <div className="mt-4 text-center text-sm">
-        Already have an account?
+        Already have an account?{' '}
         <Link href="/login" className="underline">
           Login
         </Link>
