@@ -12,7 +12,7 @@ type Props = {
 export default function NotificationCard({ type, link, user }: Props) {
   return (
     <Link href={link}>
-      <Card className="flex flex-row items-center gap-5 px-6 py-3">
+      <Card className="flex flex-row items-center gap-5 px-6 py-3 text-sm">
         {type === 'like' ? <Heart size={20} /> : <UserPlus size={20} />}
         {type === 'like' ? (
           <p>
