@@ -34,7 +34,7 @@ const SUGGESTED_USERS = [
 
 export default function Suggestions() {
   return (
-    <Card>
+    <Card className="border-none">
       <CardHeader>
         <CardTitle>Who to follow</CardTitle>
         <CardDescription>People you may know</CardDescription>
