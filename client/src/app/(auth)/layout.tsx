@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import FriendsImg from '@/assets/friends.jpg';
+import FriendsImg from '@/assets/friends.webp';
 import Logo from '@/components/shared/logo';
 
 export default function AuthLayout({
@@ -18,6 +18,7 @@ export default function AuthLayout({
         <Image
           src={FriendsImg}
           alt="friends"
+          priority
           className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
         />
       </div>
