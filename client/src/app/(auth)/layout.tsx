@@ -10,7 +10,7 @@ export default function AuthLayout({
 }>) {
   return (
     <div className="h-screen w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
-      <div className="flex flex-col items-center justify-center gap-32 py-12">
+      <div className="flex flex-col items-center justify-center gap-24 py-12">
         <Logo />
         {children}
       </div>

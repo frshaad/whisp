@@ -35,11 +35,11 @@ const SUGGESTED_USERS = [
 export default function Suggestions() {
   return (
     <Card className="border-none">
-      <CardHeader className="px-0">
+      <CardHeader>
         <CardTitle>Who to follow</CardTitle>
         <CardDescription>People you may know</CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6 px-0">
+      <CardContent className="space-y-6">
         {SUGGESTED_USERS.map((user) => (
           <SuggestionItem key={user.id} {...user} />
         ))}
