@@ -2,6 +2,7 @@ import './globals.css';
 
 import type { Metadata } from 'next';
 
+import { Toaster } from '@/components/ui/sonner';
 import { ThemeProvider } from '@/context/theme-provider';
 import { inter } from '@/lib/fonts';
 
@@ -26,6 +27,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <Toaster position="bottom-center" richColors />
         </ThemeProvider>
       </body>
     </html>
