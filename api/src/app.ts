@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import { v2 as cloudinary } from 'cloudinary';
+import cors from 'cors';
 
 import authRouter from './routes/auth.route';
 import userRouter from './routes/user.route';
@@ -18,6 +19,12 @@ cloudinary.config({
 
 const app = express();
 
+app.use(
+  cors({
+    origin: 'http://localhost:3000', // Allow requests from your frontend
+    credentials: true, // This is important if you are dealing with cookies
+  }),
+);
 app.use(express.json()); // To parse req.body
 app.use(express.urlencoded({ extended: true })); // To parse form data(urlencoded)
 app.use(cookieParser());

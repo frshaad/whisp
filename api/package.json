@@ -27,6 +27,7 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.7",
+    "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.7",
     "@typescript-eslint/eslint-plugin": "^8.6.0",
@@ -36,8 +37,8 @@
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-n": "16",
     "eslint-plugin-promise": "6",
-    "ts-node-dev": "^2.0.0",
     "prettier": "^3.3.3",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.6.2"
   }
 }
