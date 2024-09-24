@@ -39,16 +39,22 @@ export default function SignUpForm() {
       formData.append('email', data.email);
       formData.append('password', data.password);
 
-      await signUpAction(formData);
+      const result = await signUpAction(formData);
       setIsSubmitting(false);
-      toast.success('User registered! 🎉', {
-        action: {
-          label: 'Log In',
-          onClick: () => router.push('/login'),
-        },
-      });
+
+      if (result.errors) {
+        toast.error(result.message);
+      } else {
+        toast.success(result.message, {
+          action: {
+            label: 'Log In',
+            onClick: () => router.push('/login'),
+          },
+        });
+      }
     } catch (error) {
       setIsSubmitting(false);
+      toast.error('An unexpected error occurred.');
     }
   };
 
