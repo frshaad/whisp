@@ -1,13 +1,13 @@
 'use server';
 
-import axios from 'axios';
+import { AxiosError } from 'axios';
 
 import api from '@/lib/api';
-import { signupSchema } from '@/lib/schema/auth-schema';
+import { loginSchema } from '@/lib/schema/auth-schema';
 
-export async function signUpAction(formData: FormData) {
+export async function loginAction(formData: FormData) {
   const formDataObj = Object.fromEntries(formData);
-  const parsedData = signupSchema.safeParse(formDataObj);
+  const parsedData = loginSchema.safeParse(formDataObj);
 
   if (!parsedData.success) {
     return {
@@ -17,25 +17,24 @@ export async function signUpAction(formData: FormData) {
   }
 
   try {
-    const { data } = await api.post('/auth/signup', parsedData.data);
+    const { data } = await api.post('/auth/login', parsedData.data);
 
     if (data?.status === 'success') {
       return {
-        message: '🎉 Hooray! You can now log in.',
+        message: 'Login successful! Redirecting...',
       };
     }
 
-    // Handle API-specific errors (e.g., user already exists)
     return {
-      message: data?.message || 'Sign-up failed due to a server error.',
+      message: data?.message || 'Login failed. Please try again.',
       errors: data?.errors || {},
     };
   } catch (error) {
-    if (axios.isAxiosError(error)) {
+    if (error instanceof AxiosError) {
       if (error.response) {
         const { data } = error.response;
         return {
-          message: `${data?.message || 'Something went wrong.'}`,
+          message: `${data?.message || 'Invalid credentials.'}`,
           errors: data?.errors || {},
         };
       } else if (error.request) {
@@ -43,14 +42,11 @@ export async function signUpAction(formData: FormData) {
           message: 'No response from server. Please try again later.',
         };
       }
-    } else if (error instanceof Error) {
-      return {
-        message: `Unexpected error: ${error.message}`,
-      };
     }
 
+    // Generic fallback for unknown errors
     return {
-      message: 'An unknown error occurred.',
+      message: `Unexpected error: ${(error as Error).message}`,
     };
   }
 }

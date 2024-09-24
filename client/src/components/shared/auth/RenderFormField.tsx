@@ -6,10 +6,10 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { SignupFormValues } from '@/lib/schema/auth-schema';
+import { LoginFormValues, SignupFormValues } from '@/lib/schema/auth-schema';
 
 type FormFieldProps = {
-  name: keyof SignupFormValues;
+  name: keyof SignupFormValues | keyof LoginFormValues;
   label: string;
   type?: string;
   placeholder?: string;
