@@ -2,7 +2,6 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-import { useRef } from 'react';
 import { useFormState } from 'react-dom';
 import { useForm } from 'react-hook-form';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
@@ -13,14 +12,12 @@ import { Form } from '@/components/ui/form';
 import { SignupFormValues, signupSchema } from '@/lib/schema/auth-schema';
 
 import RenderFormField from './RenderFormField';
+import SubmitButton from './submit-button';
 
 const initialState: FormState = { message: '' };
 
 export default function SignupPage() {
-  const [state, formAction, isPending] = useFormState(
-    signUpAction,
-    initialState,
-  );
+  const [formState, formAction] = useFormState(signUpAction, initialState);
   const form = useForm<SignupFormValues>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
@@ -28,11 +25,26 @@ export default function SignupPage() {
       username: 'jdoe',
       email: 'jdoe@gmail.com',
       password: '12345678',
-      passwordConfirm: '12345678',
-      ...(state.fields ?? {}),
+
+      // fullname: '',
+      // username: '',
+      // email: '',
+      // password: '',
+
+      // ...(state.fields ?? {}),
     },
   });
-  const formRef = useRef<HTMLFormElement>(null);
+
+  const handleFormSubmit = async (data: SignupFormValues) => {
+    const formData = new FormData();
+    formData.append('fullname', data.fullname);
+    formData.append('username', data.username);
+    formData.append('email', data.email);
+    formData.append('password', data.password);
+
+    await formAction(formData);
+    console.log('done');
+  };
 
   return (
     <div className="mx-auto grid w-[400px] gap-6">
@@ -43,47 +55,30 @@ export default function SignupPage() {
             Enter your information to create an account
           </p>
         </div>
-        {state.message && !state.issues && (
-          <p className="text-destructive">{state.message}</p>
-        )}
-        {state.issues && (
-          <div className="text-destructive">
-            <ul>
-              {state.issues.map((issue) => (
-                <li key={issue} className="flex gap-1">
-                  {issue}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+
         <form
-          ref={formRef}
-          action={formAction}
-          onSubmit={form.handleSubmit(() => formRef.current?.submit())}
+          onSubmit={form.handleSubmit(handleFormSubmit)}
           className="space-y-6"
         >
           <div className="space-y-3">
-            <div className="flex items-center gap-2">
-              <RenderFormField
-                name="fullname"
-                label="Full Name"
-                type="text"
-                placeholder="John Doe"
-                control={form.control}
-              />
-              <RenderFormField
-                name="username"
-                label="Username"
-                type="text"
-                placeholder="johndoe"
-                control={form.control}
-              />
-            </div>
+            <RenderFormField
+              name="fullname"
+              label="Full Name"
+              type="text"
+              placeholder="John Doe"
+              control={form.control}
+            />
+            <RenderFormField
+              name="username"
+              label="Username"
+              type="text"
+              placeholder="johndoe"
+              control={form.control}
+            />
             <RenderFormField
               name="email"
               label="Email"
-              type="email"
+              type="text"
               placeholder="johndoe@example.com"
               control={form.control}
             />
@@ -93,17 +88,9 @@ export default function SignupPage() {
               type="password"
               control={form.control}
             />
-            <RenderFormField
-              name="passwordConfirm"
-              label="Confirm Password"
-              type="password"
-              control={form.control}
-            />
           </div>
           <div className="space-y-4">
-            <Button type="submit" disabled={isPending} className="w-full">
-              {isPending ? 'Please wait...' : 'Create an account'}
-            </Button>
+            <SubmitButton />
             <div className="flex items-center gap-2">
               <Button
                 variant="outline"
@@ -122,6 +109,7 @@ export default function SignupPage() {
             </div>
           </div>
         </form>
+
         <div className="mt-4 text-center text-sm">
           Already have an account?{' '}
           <Link href="/login" className="underline">
