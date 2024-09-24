@@ -1,6 +1,7 @@
 'use server';
 
 import { signupSchema } from '@/lib/schema/auth-schema';
+import { sleep } from '@/lib/utils/helper';
 
 export type FormState = {
   message: string;
@@ -30,9 +31,7 @@ function validateSignupData(formData: FormData) {
   return { valid: true, data: parsedData.data };
 }
 
-// Main signup action
 export async function signUpAction(prevState: FormState, formData: FormData) {
-  // Use validateSignupData to handle validation
   const validation = validateSignupData(formData);
 
   if (!validation.valid) {
@@ -43,6 +42,7 @@ export async function signUpAction(prevState: FormState, formData: FormData) {
     };
   }
 
-  // At this point, data is valid
+  await sleep(2);
+
   return { message: 'User registered' };
 }

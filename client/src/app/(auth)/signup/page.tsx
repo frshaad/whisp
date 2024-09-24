@@ -17,15 +17,18 @@ import RenderFormField from './RenderFormField';
 const initialState: FormState = { message: '' };
 
 export default function SignupPage() {
-  const [state, formAction] = useFormState(signUpAction, initialState);
+  const [state, formAction, isPending] = useFormState(
+    signUpAction,
+    initialState,
+  );
   const form = useForm<SignupFormValues>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
-      fullname: '',
-      username: '',
-      email: '',
-      password: '',
-      passwordConfirm: '',
+      fullname: 'John',
+      username: 'jdoe',
+      email: 'jdoe@gmail.com',
+      password: '12345678',
+      passwordConfirm: '12345678',
       ...(state.fields ?? {}),
     },
   });
@@ -98,8 +101,8 @@ export default function SignupPage() {
             />
           </div>
           <div className="space-y-4">
-            <Button type="submit" className="w-full">
-              Create an account
+            <Button type="submit" disabled={isPending} className="w-full">
+              {isPending ? 'Please wait...' : 'Create an account'}
             </Button>
             <div className="flex items-center gap-2">
               <Button

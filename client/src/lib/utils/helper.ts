@@ -13,3 +13,7 @@ export function getAbbreviation(name: string): string {
 
   return abbreviation.substring(0, 2);
 }
+
+export function sleep(s: number) {
+  return new Promise((resolve) => setTimeout(resolve, s * 1000));
+}
