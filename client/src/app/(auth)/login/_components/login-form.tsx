@@ -39,10 +39,7 @@ export default function LoginForm() {
 
       if (response.message === 'Login successful! Redirecting...') {
         toast.success('Logged in successfully!');
-
-        setTimeout(() => {
-          router.push('/');
-        }, 1000);
+        router.push('/');
       } else {
         toast.error(response.message);
       }

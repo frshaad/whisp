@@ -10,7 +10,6 @@ import {
 import User from '../models/user.model';
 import hashPassword from '../utils/hashPassword';
 import { generateTokenAndSetCookie } from '../utils/generateToken';
-import { createUserResponse } from '../utils/helper';
 
 // Sign Up
 export const signup = async (req: Request, res: Response) => {
@@ -53,7 +52,7 @@ export const signup = async (req: Request, res: Response) => {
 
     res.status(201).json({
       status: 'success',
-      user: createUserResponse(newUser),
+      user: newUser,
     });
   } catch (error) {
     console.error('Error in signup controller:', error);
@@ -98,7 +97,7 @@ export const login = async (req: Request, res: Response) => {
 
     res.status(200).json({
       status: 'success',
-      user: createUserResponse(user),
+      user,
     });
   } catch (error) {
     console.error('Error in login controller:', error);
@@ -153,7 +152,7 @@ export const getAuthenticatedUser = async (req: Request, res: Response) => {
 
     res.status(200).json({
       status: 'success',
-      user: createUserResponse(authUser),
+      user: authUser,
     });
   } catch (error) {
     console.error('Error in getAuthenticatedUser controller:', error);
