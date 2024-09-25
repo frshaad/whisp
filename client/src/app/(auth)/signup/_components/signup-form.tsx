@@ -9,7 +9,6 @@ import { toast } from 'sonner';
 import { signUpAction } from '@/actions/signup-action';
 import AuthInputs from '@/components/shared/auth/auth-form-inputs';
 import SubmitButton from '@/components/shared/auth/auth-submit-button';
-import SSOAuthButtons from '@/components/shared/auth/sso-auth-buttons';
 import { Form } from '@/components/ui/form';
 import { SignupFormValues, signupSchema } from '@/lib/schema/auth-schema';
 
@@ -66,7 +65,8 @@ export default function SignUpForm() {
         <AuthInputs form={form} type="signup" />
         <div className="space-y-4">
           <SubmitButton disabled={isSubmitting} label="Create an account" />
-          <SSOAuthButtons />
+          {/* TODO: SSO setup  */}
+          {/* <SSOAuthButtons /> */}
         </div>
       </form>
     </Form>

@@ -7,12 +7,11 @@ import { UserBadgeProps } from '@/types/user';
 
 export default function UserBadge({
   fullname,
-  link,
   username,
   profileImg,
 }: UserBadgeProps) {
   return (
-    <Link href={`${link}`} className="flex items-center gap-3">
+    <Link href={`/profile/${username}`} className="flex items-center gap-3">
       <Avatar>
         <AvatarImage src={profileImg} alt={fullname} />
         <AvatarFallback>{getAbbreviation(fullname)}</AvatarFallback>

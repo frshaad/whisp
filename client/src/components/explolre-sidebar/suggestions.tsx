@@ -5,32 +5,9 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { SUGGESTED_USERS } from '@/config/dummy-data';
 
 import SuggestionItem from './suggestion-item';
-
-const SUGGESTED_USERS = [
-  {
-    id: '1',
-    fullname: 'Erma Dooley',
-    username: 'erma_dooley',
-    link: '/',
-    profileImg: 'https://i.pravatar.cc/150?img=1',
-  },
-  {
-    id: '2',
-    fullname: 'Naomi Vandervort',
-    username: 'naomi_vandervort_95',
-    link: '/',
-    profileImg: 'https://i.pravatar.cc/150?img=2',
-  },
-  {
-    id: '3',
-    fullname: 'Florence Casper',
-    username: 'florcasper',
-    link: '/',
-    profileImg: 'https://i.pravatar.cc/150?img=3',
-  },
-];
 
 export default function Suggestions() {
   return (
