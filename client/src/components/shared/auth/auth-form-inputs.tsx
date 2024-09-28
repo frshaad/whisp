@@ -60,6 +60,12 @@ export default function AuthInputs({ type, form }: Props) {
         type="password"
         control={form.control}
       />
+      <RenderFormField
+        name="passwordConfirm"
+        label="Confirm Password"
+        type="password"
+        control={form.control}
+      />
     </div>
   );
 }

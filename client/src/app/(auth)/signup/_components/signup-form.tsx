@@ -22,6 +22,7 @@ export default function SignUpForm() {
       username: '',
       email: '',
       password: '',
+      passwordConfirm: '',
     },
   });
 
@@ -36,6 +37,7 @@ export default function SignUpForm() {
       formData.append('username', data.username);
       formData.append('email', data.email);
       formData.append('password', data.password);
+      formData.append('passwordConfirm', data.passwordConfirm);
 
       const result = await signUpAction(formData);
       setIsSubmitting(false);
@@ -49,6 +51,9 @@ export default function SignUpForm() {
             onClick: () => router.push('/login'),
           },
         });
+        setTimeout(() => {
+          router.push('/login');
+        }, 1000);
       }
     } catch (error) {
       setIsSubmitting(false);
