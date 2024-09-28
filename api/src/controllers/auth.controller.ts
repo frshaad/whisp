@@ -9,7 +9,7 @@ import {
 } from '../utils/validator-utils';
 import User from '../models/user.model';
 import hashPassword from '../utils/hashPassword';
-import { generateTokenAndSetCookie } from '../utils/generateToken';
+import { generateToken } from '../utils/generateToken';
 
 // Sign Up
 export const signup = async (req: Request, res: Response) => {
@@ -48,7 +48,7 @@ export const signup = async (req: Request, res: Response) => {
     });
     await newUser.save();
 
-    generateTokenAndSetCookie(newUser._id, res);
+    generateToken(newUser._id, res);
 
     res.status(201).json({
       status: 'success',
@@ -93,7 +93,7 @@ export const login = async (req: Request, res: Response) => {
         .json({ status: 'failed', message: 'Invalid password' });
     }
 
-    generateTokenAndSetCookie(user._id, res);
+    generateToken(user._id, res);
 
     res.status(200).json({
       status: 'success',

@@ -52,7 +52,7 @@ const authMiddleware = async (
     next();
   } catch (error) {
     console.error('Error in auth middleware:', error);
-    res.status(400).json({
+    res.status(401).json({
       status: 'failed',
       message: 'Invalid token.',
     });
