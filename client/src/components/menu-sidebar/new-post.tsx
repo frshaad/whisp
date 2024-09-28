@@ -53,56 +53,29 @@ export default function NewPost() {
 
     const formData = new FormData();
     if (data.text) formData.append('text', data.text);
-
-    // Handle the image file conversion
     if (data.img && data.img.length > 0) {
-      const reader = new FileReader();
-      reader.onloadend = async () => {
-        formData.append('img', data.img[0]);
+      formData.append('img', data.img[0]); // No need for FileReader
+    }
 
-        try {
-          // Use Axios (api.ts) to send the request
-          const response = await api.post('/posts', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          });
+    try {
+      // Use Axios (api.ts) to send the request
+      const response = await api.post('/posts', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
-          if (response.status === 201) {
-            toast.success('Post created successfully!');
-            form.reset();
-            router.push('/');
-          } else {
-            toast.error('Failed to create post');
-          }
-        } catch (error: any) {
-          toast.error(error.response?.data?.message || 'Something went wrong');
-        } finally {
-          setIsSubmitting(false);
-        }
-      };
-      reader.readAsDataURL(data.img[0]); // Convert file to Base64
-    } else {
-      // Handle form submission without image
-      try {
-        const response = await api.post('/posts', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-
-        if (response.status === 201) {
-          toast.success('Post created successfully!');
-          form.reset();
-          router.push('/');
-        } else {
-          toast.error('Failed to create post');
-        }
-      } catch (error: any) {
-        toast.error(error.response?.data?.message || 'Something went wrong');
-      } finally {
-        setIsSubmitting(false);
+      if (response.status === 201) {
+        toast.success('Post created successfully!');
+        form.reset();
+        router.push('/');
+      } else {
+        toast.error('Failed to create post');
       }
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || 'Something went wrong');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 

@@ -6,10 +6,10 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
-import { loginAction } from '@/actions/login-action';
 import AuthInputs from '@/components/shared/auth/auth-form-inputs';
 import SubmitButton from '@/components/shared/auth/auth-submit-button';
 import { Form } from '@/components/ui/form';
+import api from '@/lib/api';
 import { LoginFormValues, loginSchema } from '@/lib/schema/auth-schema';
 
 export default function LoginForm() {
@@ -30,17 +30,16 @@ export default function LoginForm() {
     try {
       setIsSubmitting(true);
 
-      const formData = new FormData();
-      formData.append('username', data.username);
-      formData.append('password', data.password);
+      const response = await api.post('/auth/login', data);
 
-      const response = await loginAction(formData);
-
-      if (response.message === 'Login successful! Redirecting...') {
+      if (response.data?.status === 'success') {
         toast.success('Logged in successfully!');
+
         router.push('/');
       } else {
-        toast.error(response.message);
+        toast.error(
+          response.data?.message || 'Login failed. Please try again.',
+        );
       }
     } catch (error) {
       toast.error('Something went wrong during login.');
