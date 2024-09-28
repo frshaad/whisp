@@ -36,12 +36,10 @@ export const createPost = async (req: Request, res: Response) => {
     return res.status(201).json({ status: 'success', post: newPost });
   } catch (error) {
     console.log('Error in create post controller', error);
-    res
-      .status(500)
-      .json({
-        status: 'failed',
-        message: 'An error occurred while creating the post.',
-      });
+    res.status(500).json({
+      status: 'failed',
+      message: 'An error occurred while creating the post.',
+    });
   }
 };
 

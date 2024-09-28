@@ -21,8 +21,8 @@ const app = express();
 
 app.use(
   cors({
-    origin: 'http://localhost:3000', // Allow requests from your frontend
-    credentials: true, // This is important if you are dealing with cookies
+    origin: process.env.CLIENT_URL || 'http://localhost:3000',
+    credentials: true,
   }),
 );
 app.use(express.json()); // To parse req.body
