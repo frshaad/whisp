@@ -5,16 +5,14 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
+import { useAuthUser } from '@/hooks/use-auth-user';
 import { cn } from '@/lib/utils';
 
-type Props = {
-  username: string;
-};
-
-export default function UserProfileLink({ username }: Props) {
+export default function UserProfileLink() {
+  const { user } = useAuthUser();
   const pathname = usePathname();
-  const path = `/profile/${username}`;
-  const isActiveLink = pathname === path;
+  const path = `/profile/${user?.username}`;
+  const isActiveLink = pathname.includes('/profile/');
 
   return (
     <li className="flex items-center">
