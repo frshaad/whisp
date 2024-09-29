@@ -35,7 +35,9 @@ export default function LoginForm() {
       if (response.data?.status === 'success') {
         toast.success('Logged in successfully!');
 
-        router.push('/');
+        setTimeout(() => {
+          router.push('/');
+        }, 1000);
       } else {
         toast.error(
           response.data?.message || 'Login failed. Please try again.',

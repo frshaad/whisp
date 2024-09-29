@@ -6,10 +6,10 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
-import { signUpAction } from '@/actions/signup-action';
 import AuthInputs from '@/components/shared/auth/auth-form-inputs';
 import SubmitButton from '@/components/shared/auth/auth-submit-button';
 import { Form } from '@/components/ui/form';
+import api from '@/lib/api';
 import { SignupFormValues, signupSchema } from '@/lib/schema/auth-schema';
 
 export default function SignUpForm() {
@@ -32,32 +32,23 @@ export default function SignUpForm() {
     try {
       setIsSubmitting(true);
 
-      const formData = new FormData();
-      formData.append('fullname', data.fullname);
-      formData.append('username', data.username);
-      formData.append('email', data.email);
-      formData.append('password', data.password);
-      formData.append('passwordConfirm', data.passwordConfirm);
+      const response = await api.post('/auth/signup', data);
 
-      const result = await signUpAction(formData);
-      setIsSubmitting(false);
+      if (response.data?.status === 'success') {
+        toast.success('User registered successfully!');
 
-      if (result.errors) {
-        toast.error(result.message);
-      } else {
-        toast.success(result.message, {
-          action: {
-            label: 'Log In',
-            onClick: () => router.push('/login'),
-          },
-        });
         setTimeout(() => {
-          router.push('/login');
-        }, 1000);
+          router.push('/');
+        }, 1500);
+      } else {
+        toast.error(
+          response.data?.message || 'Sign Up failed. Please try again.',
+        );
       }
     } catch (error) {
+      toast.error('Something went wrong during sign up.');
+    } finally {
       setIsSubmitting(false);
-      toast.error('An unexpected error occurred.');
     }
   };
 
