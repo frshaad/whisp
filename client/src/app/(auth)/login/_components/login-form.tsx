@@ -36,7 +36,7 @@ export default function LoginForm() {
         toast.success('Logged in successfully!');
 
         setTimeout(() => {
-          router.push('/');
+          router.replace('/');
         }, 1000);
       } else {
         toast.error(

@@ -38,8 +38,8 @@ export default function SignUpForm() {
         toast.success('User registered successfully!');
 
         setTimeout(() => {
-          router.push('/');
-        }, 1500);
+          router.replace('/');
+        }, 1000);
       } else {
         toast.error(
           response.data?.message || 'Sign Up failed. Please try again.',
