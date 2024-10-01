@@ -25,10 +25,13 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { useAuthUser } from '@/hooks/use-auth-user';
 import api from '@/lib/api';
 import { NewPostSchema, NewPostValues } from '@/lib/schema/post-schema';
+import { getAbbreviation } from '@/lib/utils/helper';
 
 export default function NewPost() {
+  const { user } = useAuthUser();
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -42,21 +45,23 @@ export default function NewPost() {
     try {
       setIsSubmitting(true);
 
-      // const response = await api.post('/posts', data);
       const formData = new FormData();
       if (data.text) {
         formData.append('text', data.text);
       }
-
       if (data.img && data.img[0]) {
         formData.append('img', data.img[0]);
       }
 
-      const response = await api.post('/posts', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await api.post(
+        '/upload',
+        formData,
+        //   {
+        //   headers: {
+        //     'Content-Type': 'multipart/form-data',
+        //   },
+        // }
+      );
 
       if (response.data?.status === 'success') {
         toast.success('Post created successfully!');
@@ -92,13 +97,14 @@ export default function NewPost() {
         </DialogHeader>
         <div className="flex gap-2">
           <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarImage src={user?.profileImg} />
+            <AvatarFallback>
+              {getAbbreviation(user?.fullname || '')}
+            </AvatarFallback>
           </Avatar>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(handleFormSubmit)}
-              encType="multipart/form-data"
               className="w-10/12 space-y-6"
             >
               <FormField
