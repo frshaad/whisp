@@ -12,7 +12,7 @@ export default function UserProfileLink() {
   const { user } = useAuthUser();
   const pathname = usePathname();
   const path = `/profile/${user?.username}`;
-  const isActiveLink = pathname.includes('/profile/');
+  const isActiveLink = pathname === `/profile/${user?.username}`;
 
   return (
     <li className="flex items-center">
