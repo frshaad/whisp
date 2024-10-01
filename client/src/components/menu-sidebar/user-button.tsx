@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import UserAvatar from '@/components/shared/user-avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,7 +12,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useAuthUser } from '@/hooks/use-auth-user';
-import { getAbbreviation } from '@/lib/utils/helper';
 
 export default function UserButton() {
   const { user, isLoading, error, logout } = useAuthUser();
@@ -24,12 +23,7 @@ export default function UserButton() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="flex w-fit items-center gap-4 rounded-full outline-none">
-        <Avatar>
-          <AvatarImage
-            src={user.profileImg ?? 'https://github.com/shadcn.png'}
-          />
-          <AvatarFallback>{getAbbreviation(user.fullname)}</AvatarFallback>
-        </Avatar>
+        <UserAvatar fullname={user.fullname} profileImg={user.profileImg} />
         <div className="flex flex-col items-start">
           <p className="text-sm">{user.fullname}</p>
           <p className="text-sm text-muted-foreground">@{user.username}</p>

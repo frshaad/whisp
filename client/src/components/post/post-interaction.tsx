@@ -1,4 +1,4 @@
-import { Bookmark, Heart, MessageCircle } from 'lucide-react';
+import { Heart, MessageCircle } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { CardFooter } from '@/components/ui/card';
@@ -11,7 +11,7 @@ type Props = {
 
 export default function PostInterAction({ post: { likes, comments } }: Props) {
   const isLiked = true;
-  const isSaved = true;
+  // const isSaved = true;
 
   return (
     <CardFooter className="justify-between text-xs text-muted-foreground">
@@ -38,12 +38,14 @@ export default function PostInterAction({ post: { likes, comments } }: Props) {
           <span>{post.reposts.length}</span>
         </Button> */}
       </div>
-      <Button className="flex items-center gap-2" size="sm" variant="ghost">
+
+      {/* TODO: add bookmark functionality */}
+      {/* <Button className="flex items-center gap-2" size="sm" variant="ghost">
         <Bookmark
           size={17}
           className={cn('transition', isSaved && 'fill-primary text-primary')}
         />
-      </Button>
+      </Button> */}
     </CardFooter>
   );
 }

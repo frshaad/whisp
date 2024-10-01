@@ -25,7 +25,7 @@ export const useAuthUser = () => {
       } catch (err: any) {
         if (err.response?.status === 401) {
           // If the user is not authenticated, redirect to login
-          toast.error('User not authenticated. Redirecting to login.');
+          // toast.error('User not authenticated. Redirecting to login.');
           router.push('/login');
         } else {
           toast.error('Failed to fetch user data. Please try again.');

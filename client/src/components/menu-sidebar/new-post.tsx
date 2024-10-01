@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import UserAvatar from '@/components/shared/user-avatar';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -23,12 +23,10 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useAuthUser } from '@/hooks/use-auth-user';
 import api from '@/lib/api';
 import { NewPostSchema, NewPostValues } from '@/lib/schema/post-schema';
-import { getAbbreviation } from '@/lib/utils/helper';
 
 export default function NewPost() {
   const { user } = useAuthUser();
@@ -45,23 +43,7 @@ export default function NewPost() {
     try {
       setIsSubmitting(true);
 
-      const formData = new FormData();
-      if (data.text) {
-        formData.append('text', data.text);
-      }
-      if (data.img && data.img[0]) {
-        formData.append('img', data.img[0]);
-      }
-
-      const response = await api.post(
-        '/upload',
-        formData,
-        //   {
-        //   headers: {
-        //     'Content-Type': 'multipart/form-data',
-        //   },
-        // }
-      );
+      const response = await api.post('/posts', data);
 
       if (response.data?.status === 'success') {
         toast.success('Post created successfully!');
@@ -96,12 +78,10 @@ export default function NewPost() {
           <DialogTitle>Speak your mind</DialogTitle>
         </DialogHeader>
         <div className="flex gap-2">
-          <Avatar>
-            <AvatarImage src={user?.profileImg} />
-            <AvatarFallback>
-              {getAbbreviation(user?.fullname || '')}
-            </AvatarFallback>
-          </Avatar>
+          <UserAvatar
+            fullname={user?.fullname || ''}
+            profileImg={user?.profileImg}
+          />
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(handleFormSubmit)}
@@ -124,22 +104,7 @@ export default function NewPost() {
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="img"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => field.onChange(e.target.files)}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+
               <div className="flex w-full items-center justify-between">
                 <div></div>
                 <Button type="submit" disabled={isSubmitting}>
