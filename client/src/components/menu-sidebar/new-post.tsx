@@ -1,10 +1,11 @@
+'use client';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Dot, PenLine } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { z } from 'zod';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -25,55 +26,50 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import api from '@/lib/api';
-
-const NewPostSchema = z
-  .object({
-    text: z
-      .string()
-      .max(160, {
-        message: 'Post must not be longer than 160 characters.',
-      })
-      .optional(),
-    img: z.any().optional(),
-  })
-  .refine((data) => data.text || data.img, {
-    message: 'Post must have either text or an image.',
-  });
+import { NewPostSchema, NewPostValues } from '@/lib/schema/post-schema';
 
 export default function NewPost() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const form = useForm<z.infer<typeof NewPostSchema>>({
+  const form = useForm<NewPostValues>({
     resolver: zodResolver(NewPostSchema),
   });
 
-  const onSubmit = async (data: z.infer<typeof NewPostSchema>) => {
-    setIsSubmitting(true);
-
-    const formData = new FormData();
-    if (data.text) formData.append('text', data.text);
-    if (data.img && data.img.length > 0) {
-      formData.append('img', data.img[0]); // No need for FileReader
-    }
+  const handleFormSubmit: SubmitHandler<NewPostValues> = async (data, e) => {
+    e?.preventDefault();
 
     try {
-      // Use Axios (api.ts) to send the request
+      setIsSubmitting(true);
+
+      // const response = await api.post('/posts', data);
+      const formData = new FormData();
+      if (data.text) {
+        formData.append('text', data.text);
+      }
+
+      if (data.img && data.img[0]) {
+        formData.append('img', data.img[0]);
+      }
+
       const response = await api.post('/posts', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
 
-      if (response.status === 201) {
+      if (response.data?.status === 'success') {
         toast.success('Post created successfully!');
         form.reset();
-        router.push('/');
+        router.refresh();
       } else {
-        toast.error('Failed to create post');
+        toast.error(response.data?.message || 'Failed to create post');
       }
     } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Something went wrong');
+      toast.error(
+        error.response?.data?.message ||
+          'Something went wrong during creating post',
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -101,7 +97,8 @@ export default function NewPost() {
           </Avatar>
           <Form {...form}>
             <form
-              onSubmit={form.handleSubmit(onSubmit)}
+              onSubmit={form.handleSubmit(handleFormSubmit)}
+              encType="multipart/form-data"
               className="w-10/12 space-y-6"
             >
               <FormField

@@ -1,7 +1,6 @@
 'use client';
 
 import Post from '@/components/post';
-import { POSTS } from '@/config/dummy-data';
 import { useUserPosts } from '@/hooks/use-user-posts';
 
 type Props = {
@@ -24,13 +23,13 @@ export default function UserPosts({ username }: Props) {
     return <p>{error?.message}</p>;
   }
 
-  // if (!userPosts || userPosts.length === 0) {
-  //   return <p>User has no post.</p>;
-  // }
+  if (!userPosts || userPosts.length === 0) {
+    return <p>User has no post.</p>;
+  }
 
   return (
     <section className="space-y-4">
-      {POSTS.map((post) => (
+      {userPosts.map((post) => (
         <Post key={post._id} {...post} />
       ))}
     </section>
