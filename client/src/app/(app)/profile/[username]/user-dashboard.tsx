@@ -1,16 +1,24 @@
 'use client';
 
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Ellipsis } from 'lucide-react';
 import Image from 'next/image';
+import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
 import { useAuthUser } from '@/hooks/use-auth-user';
 import { useUser } from '@/hooks/use-user';
 import { useUserPosts } from '@/hooks/use-user-posts';
+import api from '@/lib/api';
+
+import FollowButton from './follow-button';
+import UserStats from './user-stats';
 
 type Props = { username: string };
 
 export default function UserDashboard({ username }: Props) {
+  const queryClient = useQueryClient();
+
   const { user: authenticatedUser } = useAuthUser();
   const {
     user,
@@ -21,6 +29,22 @@ export default function UserDashboard({ username }: Props) {
   const { posts } = useUserPosts(username);
 
   const isSelfProfile = authenticatedUser?.username === username;
+  const isAlreadyFollowed = !!authenticatedUser?.following.find(
+    (userId) => userId === user?._id,
+  );
+
+  const { mutate: followUser, isPending: isFollowingLoading } = useMutation({
+    mutationFn: async () => {
+      await api.post(`/users/follow/${user?._id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['authUser'] });
+      queryClient.invalidateQueries({ queryKey: ['user', username] });
+    },
+    onError: () => {
+      toast.error('Failed to follow/unfollow user. Please try again.');
+    },
+  });
 
   if (isUserLoading) {
     return <p>Loading...</p>;
@@ -54,7 +78,11 @@ export default function UserDashboard({ username }: Props) {
             <Button variant="outline">Edit Profile</Button>
           ) : (
             <div className="flex items-center gap-1">
-              <Button variant="secondary">Follow</Button>
+              <FollowButton
+                isFollowing={isAlreadyFollowed}
+                onClick={followUser}
+                isLoading={isFollowingLoading}
+              />
               <Button variant="ghost">
                 <Ellipsis />
               </Button>
@@ -62,20 +90,11 @@ export default function UserDashboard({ username }: Props) {
           )}
         </div>
 
-        <div className="flex items-center gap-5">
-          <p>
-            <span className="mr-1 font-bold">{posts?.length}</span>
-            <span>{posts && posts?.length > 1 ? 'posts' : 'post'}</span>
-          </p>
-          <Button variant="ghost" size="sm">
-            <span className="mr-1 font-bold">{user.followers.length}</span>
-            <span>followers</span>
-          </Button>
-          <Button variant="ghost" size="sm">
-            <span className="mr-1 font-bold">{user.following.length}</span>
-            <span>following</span>
-          </Button>
-        </div>
+        <UserStats
+          postsCount={posts?.length || 0}
+          followersCount={user.followers.length}
+          followingCount={user.following.length}
+        />
 
         <div>
           <p className="font-normal">{user.fullname}</p>

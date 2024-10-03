@@ -16,7 +16,7 @@ export const useAuthUser = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  const { data, error, isLoading, isError } = useQuery<ReturnType>({
+  const { data, error, isLoading, isError, refetch } = useQuery<ReturnType>({
     queryKey: ['authUser'],
     queryFn: async () => {
       try {
@@ -56,5 +56,6 @@ export const useAuthUser = () => {
     isLoading,
     isError,
     logout,
+    refetch,
   };
 };
