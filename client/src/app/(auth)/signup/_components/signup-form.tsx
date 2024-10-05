@@ -6,10 +6,10 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
+import { signupAction } from '@/actions/signup-action';
 import AuthInputs from '@/components/shared/auth/auth-form-inputs';
 import SubmitButton from '@/components/shared/auth/auth-submit-button';
 import { Form } from '@/components/ui/form';
-import api from '@/lib/api';
 import { SignupFormValues, signupSchema } from '@/lib/schema/auth-schema';
 
 export default function SignUpForm() {
@@ -28,22 +28,16 @@ export default function SignUpForm() {
 
   const handleFormSubmit: SubmitHandler<SignupFormValues> = async (data, e) => {
     e?.preventDefault();
+    setIsSubmitting(true);
 
     try {
-      setIsSubmitting(true);
+      const result = await signupAction(data);
 
-      const response = await api.post('/auth/signup', data);
-
-      if (response.data?.status === 'success') {
+      if (result.status === 'success') {
         toast.success('User registered successfully!');
-
-        setTimeout(() => {
-          router.replace('/');
-        }, 1000);
+        router.replace('/');
       } else {
-        toast.error(
-          response.data?.message || 'Sign Up failed. Please try again.',
-        );
+        toast.error(result.message);
       }
     } catch (error) {
       toast.error('Something went wrong during sign up.');
@@ -61,8 +55,6 @@ export default function SignUpForm() {
         <AuthInputs form={form} type="signup" />
         <div className="space-y-4">
           <SubmitButton disabled={isSubmitting} label="Create an account" />
-          {/* TODO: SSO setup  */}
-          {/* <SSOAuthButtons /> */}
         </div>
       </form>
     </Form>

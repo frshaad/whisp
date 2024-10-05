@@ -6,10 +6,10 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
+import { loginAction } from '@/actions/login-action';
 import AuthInputs from '@/components/shared/auth/auth-form-inputs';
 import SubmitButton from '@/components/shared/auth/auth-submit-button';
 import { Form } from '@/components/ui/form';
-import api from '@/lib/api';
 import { LoginFormValues, loginSchema } from '@/lib/schema/auth-schema';
 
 export default function LoginForm() {
@@ -26,25 +26,19 @@ export default function LoginForm() {
 
   const handleFormSubmit: SubmitHandler<LoginFormValues> = async (data, e) => {
     e?.preventDefault();
+    setIsSubmitting(true);
 
     try {
-      setIsSubmitting(true);
+      const result = await loginAction(data);
 
-      const response = await api.post('/auth/login', data);
-
-      if (response.data?.status === 'success') {
-        toast.success('Logged in successfully!');
-
-        setTimeout(() => {
-          router.replace('/');
-        }, 1000);
+      if (result.status === 'success') {
+        toast.success('User registered successfully!');
+        router.replace('/');
       } else {
-        toast.error(
-          response.data?.message || 'Login failed. Please try again.',
-        );
+        toast.error(result.message);
       }
     } catch (error) {
-      toast.error('Something went wrong during login.');
+      toast.error('Something went wrong during sign up.');
     } finally {
       setIsSubmitting(false);
     }
@@ -59,8 +53,6 @@ export default function LoginForm() {
         <AuthInputs form={form} type="login" />
         <div className="space-y-4">
           <SubmitButton disabled={isSubmitting} label="Log In" />
-          {/* TODO: SSO setup  */}
-          {/* <SSOAuthButtons /> */}
         </div>
       </form>
     </Form>
