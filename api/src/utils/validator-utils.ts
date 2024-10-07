@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
+const usernameRegex = /^[a-z0-9_]{3,20}$/;
 const fullNameRegex = /^[a-zA-Z\s]{1,50}$/;
 
 export const validateEmail = (email: string): [boolean, string] => {
@@ -15,7 +15,7 @@ export const validateUsername = (username: string): [boolean, string] => {
   if (!usernameRegex.test(username)) {
     return [
       false,
-      'Username must be 3-20 characters long and can only contain letters, numbers, and underscores.',
+      'Username must be 3-20 characters long and can only contain lowercase letters, numbers, and underscores.',
     ];
   }
   return [true, ''];

@@ -1,10 +1,20 @@
 import { z } from 'zod';
 
+const usernameRegex = /^[a-z0-9_]+$/;
+
 export const signupSchema = z
   .object({
     fullname: z.string().trim().min(1, 'Full name is required'),
-    username: z.string().trim().min(1, 'Username is required'),
-    email: z.string().trim().email('Invalid email address'),
+    username: z
+      .string()
+      .trim()
+      .min(1, 'Username is required')
+      .toLowerCase()
+      .regex(
+        usernameRegex,
+        'Username must consist of lowercase letters, numbers, and underscores',
+      ),
+    email: z.string().trim().email('Invalid email address').toLowerCase(),
     password: z
       .string()
       .trim()
@@ -25,7 +35,7 @@ export const signupSchema = z
   );
 
 export const loginSchema = z.object({
-  username: z.string().trim().min(1, 'Username is required'),
+  username: z.string().trim().min(1, 'Username is required').toLowerCase(),
   password: z.string().trim().min(1, 'Password is required'),
 });
 

@@ -16,9 +16,12 @@ export const signup = async (req: Request, res: Response) => {
   try {
     const { fullname, username, email, password } = req.body;
 
+    const normalizedUsername = username.toLowerCase();
+    const normalizedEmail = email.toLowerCase();
+
     const validations = [
-      { isValid: validateUsername(username), field: 'username' },
-      { isValid: validateEmail(email), field: 'email' },
+      { isValid: validateUsername(normalizedUsername), field: 'username' },
+      { isValid: validateEmail(normalizedEmail), field: 'email' },
       { isValid: validatePassword(password), field: 'password' },
       { isValid: validateFullName(fullname), field: 'fullname' },
     ];
