@@ -1,5 +1,3 @@
-'use client';
-
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
@@ -23,20 +21,17 @@ export const useAuthUser = () => {
         const response = await api.get('/auth/me');
         return response.data;
       } catch (err: any) {
+        // Redirect if the user is not authenticated
         if (err.response?.status === 401) {
-          // If the user is not authenticated, redirect to login
-          // toast.error('User not authenticated. Redirecting to login.');
-          router.push('/login');
-        } else {
-          toast.error('Failed to fetch user data. Please try again.');
+          // router.push('/login');
+          console.log('error in login...');
         }
         throw err;
       }
     },
-    staleTime: Infinity,
-    gcTime: Infinity,
-    retry: false,
-    refetchOnWindowFocus: false,
+    staleTime: Infinity, // Use staleTime for session data that doesn't change often
+    gcTime: Infinity, // Prevent session data from being garbage collected
+    retry: false, // Do not retry failed requests
   });
 
   const logout = async () => {
@@ -44,7 +39,7 @@ export const useAuthUser = () => {
       await api.post('/auth/logout', {});
       queryClient.invalidateQueries({ queryKey: ['authUser'] });
       toast.success('Successfully logged out');
-      router.push('/login');
+      router.push('/login'); // Redirect after logout
     } catch (err: any) {
       toast.error('Failed to log out. Please try again.');
     }

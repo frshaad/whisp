@@ -1,15 +1,23 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 
-export function middleware(req: NextRequest) {
-  const hasToken = req.cookies.has('jwt');
+const PUBLIC_PATHS = ['/login', '/signup'];
 
-  if (!hasToken) {
-    return NextResponse.redirect(new URL('/login', req.url));
+export function middleware(request: NextRequest) {
+  const token = request.cookies.has('jwt');
+  const isPublicPath = PUBLIC_PATHS.includes(request.nextUrl.pathname);
+
+  if (!token && !isPublicPath) {
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
+
+  if (token && request.nextUrl.pathname === '/login') {
+    return NextResponse.redirect(new URL('/', request.url));
   }
 
   return NextResponse.next();
 }
 
+// Configure the matcher to apply the middleware only to protected pages
 export const config = {
-  matcher: ['/'],
+  matcher: ['/((?!_next|api|login|signup).*)'], // Matches all routes except login/register, _next/static, and API
 };

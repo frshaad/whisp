@@ -1,48 +1,12 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-
-import { loginAction } from '@/actions/login-action';
 import AuthInputs from '@/components/shared/auth/auth-form-inputs';
 import SubmitButton from '@/components/shared/auth/auth-submit-button';
 import { Form } from '@/components/ui/form';
-import { LoginFormValues, loginSchema } from '@/lib/schema/auth-schema';
+import { useLoginForm } from '@/hooks/use-login-form';
 
 export default function LoginForm() {
-  const router = useRouter();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const form = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
-      username: '',
-      password: '',
-    },
-  });
-
-  const handleFormSubmit: SubmitHandler<LoginFormValues> = async (data, e) => {
-    e?.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      const result = await loginAction(data);
-
-      if (result.status === 'success') {
-        toast.success('User registered successfully!');
-        router.replace('/');
-      } else {
-        toast.error(result.message);
-      }
-    } catch (error) {
-      toast.error('Something went wrong during sign up.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  const { form, handleFormSubmit, isSubmitting } = useLoginForm();
 
   return (
     <Form {...form}>
