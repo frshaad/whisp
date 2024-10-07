@@ -23,8 +23,7 @@ export const useAuthUser = () => {
       } catch (err: any) {
         // Redirect if the user is not authenticated
         if (err.response?.status === 401) {
-          // router.push('/login');
-          console.log('error in login...');
+          router.push('/login');
         }
         throw err;
       }
@@ -38,8 +37,7 @@ export const useAuthUser = () => {
     try {
       await api.post('/auth/logout', {});
       queryClient.invalidateQueries({ queryKey: ['authUser'] });
-      toast.success('Successfully logged out');
-      router.push('/login'); // Redirect after logout
+      router.push('/login');
     } catch (err: any) {
       toast.error('Failed to log out. Please try again.');
     }

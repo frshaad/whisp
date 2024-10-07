@@ -21,7 +21,6 @@ export const useLoginForm = () => {
     try {
       const result = await loginAction(data);
       if (result.status === 'success') {
-        toast.success('Logged in successfully!');
         router.replace('/');
       } else {
         toast.error(result.message);

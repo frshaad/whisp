@@ -3,6 +3,7 @@
 import { cookies } from 'next/headers';
 
 import api from '@/lib/api';
+import { parseSetCookie } from '@/lib/parse-set-cookie';
 import { SignupFormValues } from '@/lib/schema/auth-schema';
 import { AuthActionResult, AuthSuccessResponse } from '@/types/auth-actions';
 
@@ -14,20 +15,23 @@ export const signupAction = async (
       withCredentials: true,
     });
 
-    const setCookieHeader = res.headers['set-cookie'];
-    if (setCookieHeader) {
-      const cookieStore = cookies();
-      setCookieHeader.forEach((cookie) => {
-        cookieStore.set('jwt', cookie);
-      });
-    }
-
     if (res.status >= 200 && res.status < 300) {
+      const cookieStore = cookies();
+      const setCookieHeader = res.headers['set-cookie'];
+
+      if (setCookieHeader) {
+        setCookieHeader.forEach((cookie) => {
+          const { name, value, options } = parseSetCookie(cookie);
+
+          cookieStore.set(name, value, options);
+        });
+      }
+
       return res.data;
     } else {
       return {
         status: 'failed',
-        message: 'An unexpected error occurred during sign up.',
+        message: 'Sign up failed. Please check your inputs.',
       };
     }
   } catch (error: any) {
