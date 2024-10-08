@@ -20,11 +20,14 @@ export const signup = async (req: Request, res: Response) => {
     });
 
     res.status(201).json({ status: 'success', user });
-  } catch (error) {
-    console.error('Error in signup controller:', error);
+  } catch (error: any) {
+    if (error.message) {
+      return res.status(400).json({ status: 'failed', message: error.message });
+    }
+
     res.status(500).json({
       status: 'failed',
-      message: 'Internal server error',
+      message: 'Something went wrong. Please try again later.',
     });
   }
 };
@@ -39,11 +42,14 @@ export const login = async (req: Request, res: Response) => {
       status: 'success',
       user,
     });
-  } catch (error) {
-    console.error('Error in login controller:', error);
+  } catch (error: any) {
+    if (error.message) {
+      return res.status(401).json({ status: 'failed', message: error.message });
+    }
+
     res.status(500).json({
       status: 'failed',
-      message: 'Internal server error',
+      message: 'Something went wrong. Please try again later.',
     });
   }
 };
@@ -80,17 +86,16 @@ export const getAuthenticatedUser = async (req: Request, res: Response) => {
 
     res.status(200).json({ status: 'success', user: authUser });
   } catch (error: any) {
-    if (error.message === 'User not found') {
+    if (error.message) {
       return res.status(404).json({
         status: 'failed',
         message: error.message,
       });
     }
 
-    console.error('Error in getAuthenticatedUser controller:', error);
     res.status(500).json({
       status: 'failed',
-      message: 'Internal server error',
+      message: 'Something went wrong. Please try again later.',
     });
   }
 };
