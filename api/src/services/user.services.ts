@@ -87,7 +87,7 @@ export const logoutService = (res: Response): void => {
 export const getAuthenticatedUserService = async (
   userId: string,
 ): Promise<UserType> => {
-  const authUser = await User.findById(userId);
+  const authUser = await User.findById(userId).select('-password');
   if (!authUser) {
     throw new Error('User not found');
   }
