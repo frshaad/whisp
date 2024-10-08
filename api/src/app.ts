@@ -7,6 +7,8 @@ import cors from 'cors';
 import authRouter from './routes/auth.route';
 import userRouter from './routes/user.route';
 import postRouter from './routes/post.route';
+import feedRouter from "./routes/feed.route";
+
 import notificationRouter from './routes/notification.route';
 
 dotenv.config();
@@ -30,6 +32,7 @@ app.use(express.urlencoded({ extended: true })); // To parse form data(urlencode
 app.use(cookieParser());
 
 app.use('/api/auth', authRouter);
+app.use('/api/feed', feedRouter);
 app.use('/api/users', userRouter);
 app.use('/api/posts', postRouter);
 app.use('/api/notifications', notificationRouter);
