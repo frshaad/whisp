@@ -1,15 +1,19 @@
 import { Response } from 'express';
+import bcrypt from 'bcrypt';
 import User from '../models/user.model';
 import { UserType } from '../schemas/user.schema';
 import { generateToken } from '../utils/generateToken';
 import hashPassword from '../utils/hashPassword';
 
-type SignupData = {
-  fullname: string;
+type LoginData = {
   username: string;
-  email: string;
   password: string;
   res: Response;
+};
+
+type SignupData = LoginData & {
+  fullname: string;
+  email: string;
 };
 
 export const signupService = async ({
@@ -44,4 +48,49 @@ export const signupService = async ({
   generateToken(newUser._id, res);
 
   return newUser;
+};
+
+export const loginService = async ({
+  password,
+  username,
+  res,
+}: LoginData): Promise<UserType> => {
+  const normalizedUsername = username.toLowerCase();
+
+  const user = await User.findOne({ username: normalizedUsername });
+  if (!user) {
+    throw new Error('Invalid username');
+  }
+
+  const isPasswordMatch = await bcrypt.compare(
+    password as string,
+    user.password,
+  );
+  if (!isPasswordMatch) {
+    throw new Error('Invalid password');
+  }
+
+  generateToken(user._id, res);
+
+  return user;
+};
+
+export const logoutService = (res: Response): void => {
+  res.cookie('jwt', '', {
+    maxAge: 0,
+    httpOnly: true,
+    sameSite: 'strict',
+    secure: process.env.NODE_ENV !== 'development',
+  });
+};
+
+export const getAuthenticatedUserService = async (
+  userId: string,
+): Promise<UserType> => {
+  const authUser = await User.findById(userId);
+  if (!authUser) {
+    throw new Error('User not found');
+  }
+
+  return authUser;
 };
