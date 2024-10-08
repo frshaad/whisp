@@ -8,6 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { formatRelativeTime } from '@/lib/format-relative-time';
 import { Post } from '@/types/post';
 
 type Props = {
@@ -15,7 +16,7 @@ type Props = {
 };
 
 export default function PostHeader({ post: { createdAt, user } }: Props) {
-  const time = '13h';
+  const time = formatRelativeTime(createdAt);
 
   return (
     <CardHeader className="flex flex-row justify-between">

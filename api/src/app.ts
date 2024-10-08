@@ -7,7 +7,7 @@ import cors from 'cors';
 import authRouter from './routes/auth.route';
 import userRouter from './routes/user.route';
 import postRouter from './routes/post.route';
-import feedRouter from "./routes/feed.route";
+import feedRouter from './routes/feed.route';
 
 import notificationRouter from './routes/notification.route';
 
