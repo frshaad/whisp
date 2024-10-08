@@ -40,6 +40,9 @@ importers:
       pino-pretty:
         specifier: ^11.2.2
         version: 11.2.2
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
     devDependencies:
       '@types/bcrypt':
         specifier: ^5.0.2
@@ -3209,6 +3212,12 @@ packages:
       }
     engines: { node: '>=10' }
 
+  zod@3.23.8:
+    resolution:
+      {
+        integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==,
+      }
+
 snapshots:
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
@@ -5199,3 +5208,5 @@ snapshots:
   yn@3.1.1: {}
 
   yocto-queue@0.1.0: {}
+
+  zod@3.23.8: {}

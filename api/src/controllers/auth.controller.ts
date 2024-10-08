@@ -1,62 +1,22 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
-import {
-  handleValidation,
-  validateEmail,
-  validateFullName,
-  validatePassword,
-  validateUsername,
-} from '../utils/validator-utils';
 import User from '../models/user.model';
-import hashPassword from '../utils/hashPassword';
 import { generateToken } from '../utils/generateToken';
+import { signupService } from '../services/user.services';
 
 // Sign Up
 export const signup = async (req: Request, res: Response) => {
   try {
     const { fullname, username, email, password } = req.body;
-
-    const normalizedUsername = username.toLowerCase();
-    const normalizedEmail = email.toLowerCase();
-
-    const validations = [
-      { isValid: validateUsername(normalizedUsername), field: 'username' },
-      { isValid: validateEmail(normalizedEmail), field: 'email' },
-      { isValid: validatePassword(password), field: 'password' },
-      { isValid: validateFullName(fullname), field: 'fullname' },
-    ];
-
-    if (handleValidation(res, validations)) return;
-
-    const existingUser = await User.findOne({
-      $or: [{ username }, { email }],
-    });
-    if (existingUser) {
-      return res.status(400).json({
-        status: 'failed',
-        message:
-          existingUser.username === username
-            ? 'Username is already taken'
-            : 'Email is already in use',
-      });
-    }
-
-    const hashedPassword = await hashPassword(password);
-
-    const newUser = new User({
+    const user = await signupService({
       fullname,
       username,
       email,
-      password: hashedPassword,
+      password,
+      res,
     });
-    await newUser.save();
 
-    generateToken(newUser._id, res);
-
-    res.status(201).json({
-      status: 'success',
-      user: newUser,
-    });
+    res.status(201).json({ status: 'success', user });
   } catch (error) {
     console.error('Error in signup controller:', error);
     res.status(500).json({
@@ -71,14 +31,9 @@ export const login = async (req: Request, res: Response) => {
   try {
     const { username, password } = req.body;
 
-    const validations = [
-      { isValid: validateUsername(username), field: 'username' },
-      { isValid: validatePassword(password), field: 'password' },
-    ];
+    const normalizedUsername = username.toLowerCase();
 
-    if (handleValidation(res, validations)) return;
-
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ username: normalizedUsername });
     if (!user) {
       return res
         .status(400)
