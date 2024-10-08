@@ -19,7 +19,13 @@ export default function PostContent({ post: { text, img } }: Props) {
   return (
     <CardContent className="block space-y-6">
       {text && (
-        <p dir={langDir} className={cn(langDir === 'rtl' && vazir.className)}>
+        <p
+          dir={langDir}
+          className={cn(
+            'whitespace-pre-wrap',
+            langDir === 'rtl' && vazir.className,
+          )}
+        >
           {text}
         </p>
       )}
