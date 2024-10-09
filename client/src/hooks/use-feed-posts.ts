@@ -9,12 +9,16 @@ type ReturnType = {
   posts: Post[];
 };
 
-export const useFeedPosts = () => {
+type FeedType = 'foryou' | 'following';
+
+export const useFeedPosts = (type: FeedType) => {
+  const apiPath = type === 'foryou' ? '/posts' : '/posts/following';
+
   const { data, error, isLoading, isError } = useQuery<ReturnType>({
-    queryKey: ['feedPosts'],
+    queryKey: ['feedPosts', type],
     queryFn: async () => {
       try {
-        const response = await api.get('/feed');
+        const response = await api.get(apiPath);
         return response.data;
       } catch (err: any) {
         if (err.response?.status === 401) {
