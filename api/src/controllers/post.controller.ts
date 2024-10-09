@@ -233,8 +233,17 @@ export const getFollowingPosts = async (req: Request, res: Response) => {
       .populate('comments.user', '-password');
 
     res.status(200).json({ status: 'success', feedPosts });
-  } catch (error) {
-    console.log('Error in get following posts controller', error);
+  } catch (error: any) {
+    if (error.message) {
+      console.error(
+        'Error in getFollowingPosts controller',
+        error.message,
+        error.stack,
+      );
+    } else {
+      console.log('Error in get following posts controller', error);
+    }
+
     res
       .status(500)
       .json({ status: 'failed', message: 'Internal server error' });
