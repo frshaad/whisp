@@ -8,8 +8,6 @@ import { useFeedPosts } from '@/hooks/use-feed-posts';
 export default function FollowingFeed() {
   const { posts, isLoading, isError, error } = useFeedPosts('following');
 
-  
-
   if (isLoading) {
     return <h2>Loading...</h2>;
   } else if (isError) {

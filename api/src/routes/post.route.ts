@@ -19,8 +19,8 @@ router.use(authMiddleware);
 router.route('/').get(getAllPosts).post(createPost);
 
 // Get posts by specific user or following
-router.get('/:username', getUserPosts);
-router.get('/following', getFollowingPosts);
+router.route('/:username').get(getUserPosts);
+router.route('/following').get(getFollowingPosts);
 
 // Like/unlike and get liked posts
 router.route('/like/:postId').post(likeUnlikePost);
