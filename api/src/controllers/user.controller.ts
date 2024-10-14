@@ -93,22 +93,19 @@ export const getSuggestedUsers = async (req: Request, res: Response) => {
     const currentUserFollowing =
       await User.findById(currentUserId).select('following');
 
-    const users = await User.aggregate([
-      {
-        $match: {
-          _id: { $ne: currentUserId },
-        },
-      },
-      {
-        $sample: { size: 10 },
-      },
+    const users: UserType[] = await User.aggregate([
+      { $match: { _id: { $ne: currentUserId } } },
+      { $sample: { size: 10 } },
+      { $project: { password: 0 } },
     ]);
 
     const filteredUsers = users.filter(
-      (user) => !currentUserFollowing?.following.includes(user._id),
+      (user) =>
+        !currentUserFollowing?.following.includes(
+          user._id as mongoose.Types.ObjectId,
+        ),
     );
     const suggestedUsers = filteredUsers.slice(0.4);
-    suggestedUsers.forEach((user) => (user.password = null));
 
     res.status(200).json({ status: 'success', suggestedUsers });
   } catch (error) {
