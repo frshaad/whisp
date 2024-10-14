@@ -6,7 +6,7 @@ import { TabsContent } from '@/components/ui/tabs';
 import { useFeedPosts } from '@/hooks/use-feed-posts';
 
 export default function FollowingFeed() {
-  const { posts, isLoading, isError, error } = useFeedPosts('following');
+  const { posts, isLoading, isError, error } = useFeedPosts();
 
   if (isLoading) {
     return <h2>Loading...</h2>;
