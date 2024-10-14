@@ -14,9 +14,9 @@ export default function UserBadge({
     <Link href={`/profile/${username}`} className="flex items-center gap-3">
       <UserAvatar fullname={fullname} profileImg={profileImg} />
 
-      <div className="space-y-0.5">
+      <div className="w-32 space-y-0.5">
         <div className="flex items-center gap-3">
-          <CardTitle className="truncate">{fullname}</CardTitle>
+          <CardTitle className="truncate text-sm">{fullname}</CardTitle>
         </div>
         <CardDescription className="truncate">@{username}</CardDescription>
       </div>

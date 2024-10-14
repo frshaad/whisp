@@ -1,14 +1,17 @@
 import UserBadge from '@/components/shared/user-badge';
-import { Button } from '@/components/ui/button';
-import { UserBadgeProps } from '@/types/user';
+import { User } from '@/types/user';
 
-export default function SuggestionItem(userBadgeProps: UserBadgeProps) {
+import FollowButton from '../shared/follow-button';
+
+export default function SuggestionItem(user: User) {
   return (
     <div className="flex w-full items-center justify-between gap-3">
-      <UserBadge {...userBadgeProps} />
-      <Button variant="secondary" size="sm">
-        Follow
-      </Button>
+      <UserBadge
+        fullname={user.fullname}
+        username={user.username}
+        profileImg={user.profileImg}
+      />
+      <FollowButton userId={user._id} username={user.username} />
     </div>
   );
 }
