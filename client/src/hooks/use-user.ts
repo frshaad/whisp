@@ -12,7 +12,7 @@ type ReturnType = {
 };
 
 export const useUser = (username: string) => {
-  const { data, error, isLoading, isError, refetch } = useQuery<ReturnType>({
+  const { data, error, isPending, isError, refetch } = useQuery<ReturnType>({
     queryKey: ['user', username],
     queryFn: async () => {
       try {
@@ -34,7 +34,7 @@ export const useUser = (username: string) => {
   return {
     user: data?.user,
     error,
-    isLoading,
+    isPending,
     isError,
     refetch,
   };

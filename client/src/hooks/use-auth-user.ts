@@ -14,12 +14,12 @@ export const useAuthUser = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  const { data, error, isLoading, isError, refetch } = useQuery<ReturnType>({
+  const { data, error, isPending, isError, refetch } = useQuery<ReturnType>({
     queryKey: ['authUser'],
     queryFn: async () => {
       try {
-        const response = await api.get('/auth/me');
-        return response.data;
+        const { data } = await api.get('/auth/me');
+        return data.user;
       } catch (err: any) {
         // Redirect if the user is not authenticated
         if (err.response?.status === 401) {
@@ -46,7 +46,7 @@ export const useAuthUser = () => {
   return {
     user: data?.user,
     error,
-    isLoading,
+    isPending,
     isError,
     logout,
     refetch,

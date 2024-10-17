@@ -14,9 +14,9 @@ import {
 import { useAuthUser } from '@/hooks/use-auth-user';
 
 export default function UserButton() {
-  const { user, isLoading, error, logout } = useAuthUser();
+  const { user, isPending, error, logout } = useAuthUser();
 
-  if (!user || isLoading || error) {
+  if (!user || isPending || error) {
     return <p>Loading...</p>;
   }
 

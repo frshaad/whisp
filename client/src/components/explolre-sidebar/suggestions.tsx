@@ -12,9 +12,9 @@ import { useSuggestedUsers } from '@/hooks/use-suggested-users';
 import SuggestionItem from './suggestion-item';
 
 export default function Suggestions() {
-  const { suggestedUsers, isLoading, isError, error } = useSuggestedUsers();
+  const { suggestedUsers, isPending, isError, error } = useSuggestedUsers();
 
-  if (isLoading) {
+  if (isPending) {
     return <p>Loading...</p>;
   }
   if (isError) {

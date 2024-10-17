@@ -12,7 +12,7 @@ type ReturnType = {
 };
 
 export const useUserPosts = (username: string) => {
-  const { data, error, isLoading, isError } = useQuery<ReturnType>({
+  const { data, error, isPending, isError } = useQuery<ReturnType>({
     queryKey: ['posts', username],
     queryFn: async () => {
       try {
@@ -34,7 +34,7 @@ export const useUserPosts = (username: string) => {
   return {
     posts: data?.posts,
     error,
-    isLoading,
+    isPending,
     isError,
   };
 };

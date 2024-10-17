@@ -10,7 +10,7 @@ export type ReturnType = {
 };
 
 export const useSuggestedUsers = () => {
-  const { data, error, isLoading, isError } = useQuery<ReturnType>({
+  const { data, error, isPending, isError } = useQuery<ReturnType>({
     queryKey: ['suggestedUser'],
     queryFn: async () => {
       try {
@@ -30,7 +30,7 @@ export const useSuggestedUsers = () => {
   return {
     suggestedUsers: data?.suggestedUsers,
     error,
-    isLoading,
+    isPending,
     isError,
   };
 };

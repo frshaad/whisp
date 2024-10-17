@@ -10,7 +10,7 @@ type ReturnType = {
 };
 
 export const useFollowingPosts = () => {
-  const { data, error, isLoading, isError } = useQuery<ReturnType>({
+  const { data, error, isPending, isError } = useQuery<ReturnType>({
     queryKey: ['followingPosts'],
     queryFn: async () => {
       try {
@@ -31,7 +31,7 @@ export const useFollowingPosts = () => {
   return {
     posts: data?.posts,
     error,
-    isLoading,
+    isPending,
     isError,
   };
 };

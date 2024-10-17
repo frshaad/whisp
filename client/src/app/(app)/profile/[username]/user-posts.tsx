@@ -12,10 +12,10 @@ export default function UserPosts({ username }: Props) {
     posts: userPosts,
     error,
     isError,
-    isLoading,
+    isPending,
   } = useUserPosts(username);
 
-  if (isLoading) {
+  if (isPending) {
     return <p>Loading...</p>;
   }
 

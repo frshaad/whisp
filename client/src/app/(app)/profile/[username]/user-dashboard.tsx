@@ -19,7 +19,7 @@ export default function UserDashboard({ username }: Props) {
     user,
     error: userError,
     isError: isUserError,
-    isLoading: isUserLoading,
+    isPending: isUserLoading,
   } = useUser(username);
   const { posts } = useUserPosts(username);
 
