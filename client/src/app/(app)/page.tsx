@@ -1,4 +1,4 @@
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import FollowingFeed from './_components/following-feed';
 import ForYouFeed from './_components/for-you-feed';
@@ -16,8 +16,12 @@ export default function HomePage() {
           </TabsTrigger>
         </TabsList>
 
-        <ForYouFeed />
-        <FollowingFeed />
+        <TabsContent value="foryou">
+          <ForYouFeed />
+        </TabsContent>
+        <TabsContent value="following">
+          <FollowingFeed />
+        </TabsContent>
       </Tabs>
     </section>
   );

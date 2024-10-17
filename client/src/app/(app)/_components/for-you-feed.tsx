@@ -2,13 +2,12 @@
 
 import Post from '@/components/post';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { TabsContent } from '@/components/ui/tabs';
 import { useFeedPosts } from '@/hooks/use-feed-posts';
 
 export default function ForYouFeed() {
-  const { posts, isLoading, isError, error } = useFeedPosts();
+  const { posts, isPending, isError, error } = useFeedPosts();
 
-  if (isLoading) {
+  if (isPending) {
     return <h2>Loading...</h2>;
   } else if (isError) {
     return <h2>{error?.message}</h2>;
@@ -19,14 +18,12 @@ export default function ForYouFeed() {
   }
 
   return (
-    <TabsContent value="foryou" className="pt-2">
-      <ScrollArea type="scroll" className="h-screen w-full">
-        <div className="space-y-4">
-          {posts.map((post) => (
-            <Post key={post._id} {...post} />
-          ))}
-        </div>
-      </ScrollArea>
-    </TabsContent>
+    <ScrollArea type="scroll" className="min-h-screen w-full">
+      <div className="space-y-4 py-4">
+        {posts.map((post) => (
+          <Post key={post._id} {...post} />
+        ))}
+      </div>
+    </ScrollArea>
   );
 }
