@@ -1,8 +1,10 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
 import { Button, ButtonProps } from '@/components/ui/button';
-import { useAuthUser } from '@/hooks/use-auth-user';
 import { useFollow } from '@/hooks/use-follow';
+import { useGetAuthUser } from '@/hooks/use-get-auth-user';
 
 type Props = ButtonProps & {
   userId: string;
@@ -10,16 +12,24 @@ type Props = ButtonProps & {
 };
 
 export default function FollowButton({ userId, username, ...props }: Props) {
-  const { user: authUser } = useAuthUser();
-  const { handleFollow, isFollowing } = useFollow(username);
+  const authUser = useGetAuthUser();
 
-  const isAlreadyFollowed = authUser?.following.includes(userId);
+  const [isAlreadyFollowed, setIsAlreadyFollowed] = useState<boolean>(
+    authUser?.following.includes(userId) as boolean,
+  );
+  const { handleFollow } = useFollow(username);
+
+  useEffect(() => {
+    setIsAlreadyFollowed(authUser?.following.includes(userId) as boolean);
+  }, [authUser, userId]);
 
   return (
     <Button
       variant={isAlreadyFollowed ? 'default' : 'secondary'}
-      disabled={isFollowing}
-      onClick={() => handleFollow(userId)}
+      onClick={() => {
+        setIsAlreadyFollowed((prev) => !prev);
+        handleFollow(userId);
+      }}
       {...props}
     >
       {isAlreadyFollowed ? 'Following' : 'Follow'}
