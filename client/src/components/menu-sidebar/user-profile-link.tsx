@@ -5,14 +5,14 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
-import { useAuthUser } from '@/hooks/use-auth-user';
+import { useGetAuthUser } from '@/hooks/use-get-auth-user';
 import { cn } from '@/lib/utils';
 
 export default function UserProfileLink() {
-  const { user } = useAuthUser();
+  const authUser = useGetAuthUser();
   const pathname = usePathname();
-  const path = `/profile/${user?.username}`;
-  const isActiveLink = pathname === `/profile/${user?.username}`;
+  const path = `/profile/${authUser?.username}`;
+  const isActiveLink = pathname === `/profile/${authUser?.username}`;
 
   return (
     <li className="flex items-center">

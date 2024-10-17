@@ -24,12 +24,12 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
-import { useAuthUser } from '@/hooks/use-auth-user';
+import { useGetAuthUser } from '@/hooks/use-get-auth-user';
 import api from '@/lib/api';
 import { NewPostSchema, NewPostValues } from '@/lib/schema/post-schema';
 
 export default function NewPost() {
-  const { user } = useAuthUser();
+  const authUser = useGetAuthUser();
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -79,8 +79,8 @@ export default function NewPost() {
         </DialogHeader>
         <div className="flex gap-2">
           <UserAvatar
-            fullname={user?.fullname || ''}
-            profileImg={user?.profileImg}
+            fullname={authUser?.fullname || ''}
+            profileImg={authUser?.profileImg}
           />
           <Form {...form}>
             <form

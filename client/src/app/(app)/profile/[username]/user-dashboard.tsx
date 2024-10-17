@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 import FollowButton from '@/components/shared/follow-button';
 import { Button } from '@/components/ui/button';
-import { useAuthUser } from '@/hooks/use-auth-user';
+import { useGetAuthUser } from '@/hooks/use-get-auth-user';
 import { useUser } from '@/hooks/use-user';
 import { useUserPosts } from '@/hooks/use-user-posts';
 
@@ -14,7 +14,7 @@ import UserStats from './user-stats';
 type Props = { username: string };
 
 export default function UserDashboard({ username }: Props) {
-  const { user: authenticatedUser } = useAuthUser();
+  const authUser = useGetAuthUser();
   const {
     user,
     error: userError,
@@ -23,7 +23,7 @@ export default function UserDashboard({ username }: Props) {
   } = useUser(username);
   const { posts } = useUserPosts(username);
 
-  const isSelfProfile = authenticatedUser?.username === username;
+  const isSelfProfile = authUser?.username === username;
 
   if (isUserLoading) {
     return <p>Loading...</p>;
