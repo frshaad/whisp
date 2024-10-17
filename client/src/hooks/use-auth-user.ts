@@ -5,16 +5,11 @@ import { toast } from 'sonner';
 import api from '@/lib/api';
 import { User } from '@/types/user';
 
-type ReturnType = {
-  status: string;
-  user: User;
-};
-
 export const useAuthUser = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  const { data, error, isPending, isError, refetch } = useQuery<ReturnType>({
+  const { data, error, isPending, isError, refetch } = useQuery<User>({
     queryKey: ['authUser'],
     queryFn: async () => {
       try {
@@ -44,7 +39,7 @@ export const useAuthUser = () => {
   };
 
   return {
-    user: data?.user,
+    user: data,
     error,
     isPending,
     isError,
