@@ -174,7 +174,9 @@ export const commentOnPost = async (req: Request, res: Response) => {
 
 export const getAllPosts = async (req: Request, res: Response) => {
   try {
-    const posts = await Post.find()
+    const authenticatedUserId = req.user?._id;
+
+    const posts = await Post.find({ user: { $ne: authenticatedUserId } })
       .sort({ createAt: -1 })
       .populate('user', '-password')
       .populate('comments.user', '-password');
