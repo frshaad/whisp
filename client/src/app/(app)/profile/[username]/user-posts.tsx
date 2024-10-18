@@ -1,6 +1,6 @@
 'use client';
 
-import Post from '@/components/post';
+import PostCard from '@/components/post-card';
 import { useUserPosts } from '@/hooks/use-user-posts';
 
 type Props = {
@@ -30,7 +30,11 @@ export default function UserPosts({ username }: Props) {
   return (
     <section className="space-y-4">
       {userPosts.map((post) => (
-        <Post key={post._id} {...post} />
+        <PostCard key={post._id} post={post}>
+          <PostCard.Header />
+          <PostCard.Content />
+          <PostCard.Interaction />
+        </PostCard>
       ))}
     </section>
   );
