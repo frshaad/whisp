@@ -2,8 +2,10 @@ import { MessageCircle } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { CardFooter } from '@/components/ui/card';
+import { useAuthUser } from '@/hooks/use-auth-user';
 import { Post } from '@/types/post';
 
+import DeletePost from './delete-post';
 import LikeButton from './like-button';
 
 type Props = {
@@ -11,6 +13,8 @@ type Props = {
 };
 
 export default function PostInterAction({ post }: Props) {
+  const { user } = useAuthUser();
+
   return (
     <CardFooter className="justify-between text-xs text-muted-foreground">
       <div className="flex items-center gap-8">
@@ -20,24 +24,9 @@ export default function PostInterAction({ post }: Props) {
           <MessageCircle size={17} />
           <span>{post.comments ? post.comments.length : 0}</span>
         </Button>
-
-        {/* TODO: add repost functionality */}
-        {/* <Button className="flex items-center gap-2" size="sm" variant="ghost">
-          <Repeat2
-            size={17}
-            className={cn('transition', isReposted && 'text-primary')}
-          />
-          <span>{post.reposts.length}</span>
-        </Button> */}
       </div>
 
-      {/* TODO: add bookmark functionality */}
-      {/* <Button className="flex items-center gap-2" size="sm" variant="ghost">
-        <Bookmark
-          size={17}
-          className={cn('transition', isSaved && 'fill-primary text-primary')}
-        />
-      </Button> */}
+      {post.user.username === user?.username && <DeletePost post={post} />}
     </CardFooter>
   );
 }
