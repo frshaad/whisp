@@ -1,10 +1,21 @@
 'use client';
 
-import { MessageCircle } from 'lucide-react';
+import { Eraser, Heart, MessageCircle } from 'lucide-react';
 import Image from 'next/image';
 import { createContext, memo, useContext, useMemo } from 'react';
 
 import UserBadge from '@/components/shared/user-badge';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -13,14 +24,12 @@ import {
   CardHeader,
 } from '@/components/ui/card';
 import { useAuthUser } from '@/hooks/use-auth-user';
+import { useDeletePost } from '@/hooks/use-delete-post';
 import { vazir } from '@/lib/fonts';
 import { formatRelativeTime } from '@/lib/format-relative-time';
 import { langDirection } from '@/lib/languages';
 import { cn } from '@/lib/utils';
 import { Post } from '@/types/post';
-
-import DeletePost from './delete-post';
-import LikeButton from './like-button';
 
 type PostCardContext = {
   post: Post;
@@ -103,7 +112,7 @@ PostCard.Interaction = memo(function PostCardInteraction() {
   return (
     <CardFooter className="justify-between text-xs text-muted-foreground">
       <div className="flex items-center gap-8">
-        <LikeButton post={post} />
+        <PostCard.LikeButton />
 
         <Button className="flex items-center gap-2" size="sm" variant="ghost">
           <MessageCircle size={17} />
@@ -111,7 +120,54 @@ PostCard.Interaction = memo(function PostCardInteraction() {
         </Button>
       </div>
 
-      {post.user.username === user?.username && <DeletePost post={post} />}
+      {post.user.username === user?.username && <PostCard.DeleteButton />}
     </CardFooter>
+  );
+});
+
+PostCard.LikeButton = memo(function PostCardLikedButton() {
+  const { post } = usePostCardContext();
+  const { user } = useAuthUser();
+
+  const isLiked = user ? post.likes.includes(user.username) : false;
+
+  return (
+    <Button className="flex items-center gap-2" size="sm" variant="ghost">
+      <Heart
+        size={17}
+        className={cn('transition', isLiked && 'fill-primary text-primary')}
+      />
+      <span>{post.likes.length}</span>
+    </Button>
+  );
+});
+
+PostCard.DeleteButton = memo(function PostCardDeleteButton() {
+  const { post } = usePostCardContext();
+  const { handleDeletePost } = useDeletePost(post);
+
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger className="flex items-center gap-2">
+        <Eraser size={16} />
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogDescription>
+            This action cannot be undone. This will permanently delete your
+            post.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <Button variant="destructive" asChild>
+            <AlertDialogAction onClick={() => handleDeletePost()}>
+              Remove the post
+            </AlertDialogAction>
+          </Button>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 });
