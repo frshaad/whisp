@@ -3,14 +3,17 @@ import './globals.css';
 import type { Metadata } from 'next';
 
 import { Toaster } from '@/components/ui/sonner';
-import ReactQueryProvider from '@/context/react-query-provider';
-import { ThemeProvider } from '@/context/theme-provider';
 import { inter } from '@/lib/fonts';
+import ReactQueryProvider from '@/providers/react-query-provider';
+import { ThemeProvider } from '@/providers/theme-provider';
 
 export const metadata: Metadata = {
-  title: 'Whisp',
+  title: {
+    template: '%s | Whisp',
+    default: 'Whisp',
+  },
   description:
-    'Whisp is a fast, real-time social media platform where users can share short, impactful messages, connect with others, and stay updated on trends. Join conversations, follow topics, and interact with a community in a dynamic and engaging way.',
+    'Whisp is a fast, real-time social media platform where users can share short, impactful messages, connect with others, and stay updated on trends.',
 };
 
 export default function RootLayout({
