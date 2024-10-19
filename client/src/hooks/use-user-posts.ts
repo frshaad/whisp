@@ -6,18 +6,13 @@ import { toast } from 'sonner';
 import api from '@/lib/api';
 import { Post } from '@/types/post';
 
-type ReturnType = {
-  status: string;
-  posts: Post[];
-};
-
 export const useUserPosts = (username: string) => {
-  const { data, error, isPending, isError } = useQuery<ReturnType>({
+  const { data, error, isPending, isError } = useQuery<Post[]>({
     queryKey: ['posts', username],
     queryFn: async () => {
       try {
-        const response = await api.get(`/posts/${username}`);
-        return response.data;
+        const { data } = await api.get(`/posts/${username}`);
+        return data.posts;
       } catch (err: any) {
         if (err.response?.status === 401) {
           // If the user is not authenticated, redirect to login
@@ -32,7 +27,7 @@ export const useUserPosts = (username: string) => {
   });
 
   return {
-    posts: data?.posts,
+    posts: data,
     error,
     isPending,
     isError,

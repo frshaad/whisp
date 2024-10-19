@@ -7,8 +7,12 @@ async function deletePost(postId: string) {
   try {
     const { data } = await api.delete(`/posts/${postId}`);
     return data.message;
-  } catch (error: any) {
-    throw new Error(error.message || 'An unknown error occurred.');
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error('An unknown error occurred.');
+    }
   }
 }
 

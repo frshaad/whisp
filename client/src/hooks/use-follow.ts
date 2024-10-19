@@ -22,7 +22,7 @@ export function useFollow(username: string) {
     async onMutate(userId) {
       await queryClient.cancelQueries({ queryKey: ['authUser'] });
 
-      const previousAuthUser = queryClient.getQueryData(['authUser']) as User;
+      const previousAuthUser = queryClient.getQueryData<User>(['authUser']);
 
       queryClient.setQueryData(['authUser'], (oldAuthUser: User) => ({
         ...oldAuthUser,
