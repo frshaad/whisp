@@ -25,6 +25,7 @@ import {
 } from '@/components/ui/card';
 import { useAuthUser } from '@/hooks/use-auth-user';
 import { useDeletePost } from '@/hooks/use-delete-post';
+import { useLikePost } from '@/hooks/use-like-post';
 import { vazir } from '@/lib/fonts';
 import { formatRelativeTime } from '@/lib/format-relative-time';
 import { langDirection } from '@/lib/languages';
@@ -128,11 +129,17 @@ PostCard.Interaction = memo(function PostCardInteraction() {
 PostCard.LikeButton = memo(function PostCardLikedButton() {
   const { post } = usePostCardContext();
   const { user } = useAuthUser();
+  const { handleLikePost } = useLikePost(post);
 
-  const isLiked = user ? post.likes.includes(user.username) : false;
+  const isLiked = user ? post.likes.includes(user._id) : false;
 
   return (
-    <Button className="flex items-center gap-2" size="sm" variant="ghost">
+    <Button
+      className="flex items-center gap-2"
+      size="sm"
+      variant="ghost"
+      onClick={() => handleLikePost()}
+    >
       <Heart
         size={17}
         className={cn('transition', isLiked && 'fill-primary text-primary')}
