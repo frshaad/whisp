@@ -24,12 +24,12 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
-import { useGetAuthUser } from '@/hooks/use-get-auth-user';
+import { useAuthUser } from '@/hooks/use-auth-user';
 import api from '@/lib/api';
 import { NewPostSchema, NewPostValues } from '@/lib/schema/post-schema';
 
 export default function NewPost() {
-  const authUser = useGetAuthUser();
+  const { user: authUser } = useAuthUser();
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
 

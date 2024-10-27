@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react';
 
 import { Button, ButtonProps } from '@/components/ui/button';
+import { useAuthUser } from '@/hooks/use-auth-user';
 import { useFollow } from '@/hooks/use-follow';
-import { useGetAuthUser } from '@/hooks/use-get-auth-user';
 
 type Props = ButtonProps & {
   userId: string;
@@ -12,7 +12,7 @@ type Props = ButtonProps & {
 };
 
 export default function FollowButton({ userId, username, ...props }: Props) {
-  const authUser = useGetAuthUser();
+  const { user: authUser } = useAuthUser();
 
   const [isAlreadyFollowed, setIsAlreadyFollowed] = useState<boolean>(
     authUser?.following.includes(userId) as boolean,
