@@ -1,11 +1,12 @@
 'use client';
 
-import { Ellipsis } from 'lucide-react';
+import { Ellipsis, UserPen } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import FollowButton from '@/components/shared/follow-button';
 import { Button } from '@/components/ui/button';
-import { useGetAuthUser } from '@/hooks/use-get-auth-user';
+import { useAuthUser } from '@/hooks/use-auth-user';
 import { useUser } from '@/hooks/use-user';
 import { useUserPosts } from '@/hooks/use-user-posts';
 
@@ -14,7 +15,7 @@ import UserStats from './user-stats';
 type Props = { username: string };
 
 export default function UserDashboard({ username }: Props) {
-  const authUser = useGetAuthUser();
+  const { user: authUser } = useAuthUser();
   const {
     user,
     error: userError,
@@ -38,7 +39,7 @@ export default function UserDashboard({ username }: Props) {
   }
 
   return (
-    <section className="flex gap-10 border-b pb-10">
+    <section className="flex gap-10 pb-10">
       <div className="size-32">
         <Image
           src={user.profileImg || '/unknown-user.webp'}
@@ -54,7 +55,15 @@ export default function UserDashboard({ username }: Props) {
         <div className="flex w-full items-center justify-between">
           <h2 className="text-lg font-semibold">{username}</h2>
           {isSelfProfile ? (
-            <Button variant="outline">Edit Profile</Button>
+            <Button variant="outline" size="sm" asChild>
+              <Link
+                href={`/profile/${username}/edit`}
+                className="flex items-center gap-2"
+              >
+                <UserPen size={16} />
+                Edit Profile
+              </Link>
+            </Button>
           ) : (
             <div className="flex items-center gap-1">
               <FollowButton userId={user._id} username={username} />
