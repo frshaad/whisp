@@ -1,7 +1,6 @@
 {
   "root": true,
   "extends": [
-    "standard",
     "next/core-web-vitals",
     "plugin:@tanstack/query/recommended",
     "prettier"

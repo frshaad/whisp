@@ -1,5 +1,5 @@
 {
-  "extends": ["standard", "plugin:@typescript-eslint/strict", "prettier"],
+  "extends": ["plugin:@typescript-eslint/strict", "prettier"],
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
   "root": true,
