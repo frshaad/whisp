@@ -16,7 +16,7 @@ export default function UserProfileLink() {
     return null;
   }
   const path = `/profile/${user?.username}`;
-  const isActiveLink = pathname === `/profile/${user?.username}`;
+  const isActiveLink = pathname.includes(`/profile/${user?.username}`);
 
   return (
     <li className="flex items-center">
