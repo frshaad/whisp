@@ -10,7 +10,7 @@
     "format": "pnpm recursive run format"
   },
   "devDependencies": {
-    "concurrently": "^9.1.0"
+    "concurrently": "^9.1.2"
   },
   "dependencies": {
     "nanoid": "^5.0.9"
