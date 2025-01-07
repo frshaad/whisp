@@ -1,4 +1,9 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  type QueryKey,
+  useQuery,
+  useQueryClient,
+  UseQueryOptions,
+} from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
@@ -9,24 +14,9 @@ export const useAuthUser = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  const { data, error, isPending, isError, refetch } = useQuery<User>({
-    queryKey: ['authUser'],
-    queryFn: async () => {
-      try {
-        const { data } = await api.get('/auth/me');
-        return data.user;
-      } catch (err: any) {
-        // Redirect if the user is not authenticated
-        if (err.response?.status === 401) {
-          router.push('/login');
-        }
-        throw err;
-      }
-    },
-    staleTime: Infinity, // Use staleTime for session data that doesn't change often
-    gcTime: Infinity, // Prevent session data from being garbage collected
-    retry: false, // Do not retry failed requests
-  });
+  const { data, error, isPending, isError, refetch } = useQuery<User>(
+    authUserQueryOptions(router),
+  );
 
   const logout = async () => {
     try {
@@ -47,3 +37,25 @@ export const useAuthUser = () => {
     refetch,
   };
 };
+
+export function authUserQueryOptions(
+  router: ReturnType<typeof useRouter>,
+): UseQueryOptions<User, Error, User, QueryKey> {
+  return {
+    queryKey: ['authUser'],
+    queryFn: async () => {
+      try {
+        const { data } = await api.get('/auth/me');
+        return data.user;
+      } catch (err: any) {
+        // Redirect if the user is not authenticated
+        if (err.response?.status === 401) {
+          router.push('/login');
+        }
+        throw err;
+      }
+    },
+    staleTime: Infinity, // Use staleTime for session data that doesn't change often
+    gcTime: Infinity, // Prevent session data from being garbage collected
+  };
+}
