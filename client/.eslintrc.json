@@ -1,15 +1,6 @@
 {
-  "root": true,
   "extends": [
     "next/core-web-vitals",
-    "plugin:@tanstack/query/recommended",
-    "prettier"
-  ],
-  "plugins": ["simple-import-sort"],
-  "globals": { "React": "writable" },
-  "rules": {
-    "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error",
-    "no-duplicate-imports": "error"
-  }
+    "next/typescript"
+  ]
 }
