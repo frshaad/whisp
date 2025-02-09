@@ -2,20 +2,25 @@
 
 import { useEffect, useState } from 'react';
 
-import { Button, ButtonProps } from '@/components/ui/button';
+import type { ButtonProps } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { useAuthUser } from '@/hooks/use-auth-user';
 import { useFollow } from '@/hooks/use-follow';
 
-type Props = ButtonProps & {
+type Properties = ButtonProps & {
   userId: string;
   username: string;
 };
 
-export default function FollowButton({ userId, username, ...props }: Props) {
+export default function FollowButton({
+  userId,
+  username,
+  ...properties
+}: Properties) {
   const { user: authUser } = useAuthUser();
 
   const [isAlreadyFollowed, setIsAlreadyFollowed] = useState<boolean>(
-    authUser?.following.includes(userId) as boolean,
+    authUser?.following.includes(userId) as boolean
   );
   const { handleFollow } = useFollow(username);
 
@@ -27,10 +32,10 @@ export default function FollowButton({ userId, username, ...props }: Props) {
     <Button
       variant={isAlreadyFollowed ? 'default' : 'secondary'}
       onClick={() => {
-        setIsAlreadyFollowed((prev) => !prev);
+        setIsAlreadyFollowed((previous) => !previous);
         handleFollow(userId);
       }}
-      {...props}
+      {...properties}
     >
       {isAlreadyFollowed ? 'Following' : 'Follow'}
     </Button>

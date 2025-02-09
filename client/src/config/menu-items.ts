@@ -1,6 +1,6 @@
 import { Bell, House } from 'lucide-react';
 
-import { MenuItem } from '@/types/menu-sidebar';
+import type { MenuItem } from '@/types/menu-sidebar';
 
 export const MENU_ITEMS: MenuItem[] = [
   { id: 'home', icon: House, label: 'Home', path: '/' },

@@ -1,8 +1,9 @@
 'use client';
 
-import { Eraser, Heart, MessageCircle } from 'lucide-react';
 import Image from 'next/image';
 import { createContext, memo, useContext, useMemo } from 'react';
+
+import { Eraser, Heart, MessageCircle } from 'lucide-react';
 
 import UserBadge from '@/components/shared/user-badge';
 import {
@@ -28,15 +29,15 @@ import { useDeletePost } from '@/hooks/use-delete-post';
 import { useLikePost } from '@/hooks/use-like-post';
 import { vazir } from '@/lib/fonts';
 import { formatRelativeTime } from '@/lib/format-relative-time';
-import { langDirection } from '@/lib/languages';
+import { getLangDirection } from '@/lib/languages';
 import { cn } from '@/lib/utils';
-import { Post } from '@/types/post';
+import type { Post } from '@/types/post';
 
 type PostCardContext = {
   post: Post;
 };
 
-const postCardContext = createContext<PostCardContext | null>(null);
+const postCardContext = createContext<PostCardContext | undefined>(undefined);
 
 function usePostCardContext() {
   const context = useContext(postCardContext);
@@ -46,11 +47,11 @@ function usePostCardContext() {
   return context;
 }
 
-type PostCardProps = React.PropsWithChildren & {
+type PostCardProperties = React.PropsWithChildren & {
   post: Post;
 };
 
-export default function PostCard({ post, children }: PostCardProps) {
+export default function PostCard({ post, children }: PostCardProperties) {
   const providerValue = useMemo(() => ({ post }), [post]);
 
   return (
@@ -60,7 +61,7 @@ export default function PostCard({ post, children }: PostCardProps) {
   );
 }
 
-PostCard.Header = memo(function PostCardHeader() {
+PostCard.Header = memo(() => {
   const { post } = usePostCardContext();
   const time = formatRelativeTime(post.createdAt);
 
@@ -74,39 +75,46 @@ PostCard.Header = memo(function PostCardHeader() {
   );
 });
 
-PostCard.Content = memo(function PostCardContent() {
+PostCard.Header.displayName = 'PostCard.Header';
+
+PostCard.Content = memo(() => {
   const { post } = usePostCardContext();
   const { text, img } = post;
 
-  const langDir = useMemo(() => (text ? langDirection(text) : 'ltr'), [text]);
+  const langDirection = useMemo(
+    () => (text ? getLangDirection(text) : 'ltr'),
+    [text]
+  );
 
   return (
     <CardContent className="block space-y-6">
-      {text && (
+      {!!text && (
         <p
-          dir={langDir}
           className={cn(
             'whitespace-pre-wrap',
-            langDir === 'rtl' && vazir.className,
+            langDirection === 'rtl' && vazir.className
           )}
+          dir={langDirection}
         >
           {text}
         </p>
       )}
-      {img && (
+      {!!img && (
         <Image
-          src={img}
           alt={text || 'post'}
-          width={100}
-          height={100}
           className="w-full rounded-md border"
+          height={100}
+          src={img}
+          width={100}
         />
       )}
     </CardContent>
   );
 });
 
-PostCard.Interaction = memo(function PostCardInteraction() {
+PostCard.Content.displayName = 'PostCard.Content';
+
+PostCard.Interaction = memo(() => {
   const { post } = usePostCardContext();
   const { user } = useAuthUser();
 
@@ -126,7 +134,9 @@ PostCard.Interaction = memo(function PostCardInteraction() {
   );
 });
 
-PostCard.LikeButton = memo(function PostCardLikedButton() {
+PostCard.Interaction.displayName = 'PostCard.Interaction';
+
+PostCard.LikeButton = memo(() => {
   const { post } = usePostCardContext();
   const { user } = useAuthUser();
   const { handleLikePost } = useLikePost(post);
@@ -141,15 +151,17 @@ PostCard.LikeButton = memo(function PostCardLikedButton() {
       onClick={() => handleLikePost()}
     >
       <Heart
-        size={17}
         className={cn('transition', isLiked && 'fill-primary text-primary')}
+        size={17}
       />
       <span>{post.likes.length}</span>
     </Button>
   );
 });
 
-PostCard.DeleteButton = memo(function PostCardDeleteButton() {
+PostCard.LikeButton.displayName = 'PostCard.LikeButton';
+
+PostCard.DeleteButton = memo(() => {
   const { post } = usePostCardContext();
   const { handleDeletePost } = useDeletePost(post);
 
@@ -178,3 +190,5 @@ PostCard.DeleteButton = memo(function PostCardDeleteButton() {
     </AlertDialog>
   );
 });
+
+PostCard.DeleteButton.displayName = 'PostCard.DeleteButton';

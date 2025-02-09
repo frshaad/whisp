@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import api from '@/lib/api';
-import { User } from '@/types/user';
+import type { User } from '@/types/user';
 
 async function handleToggleFollow(userId: string) {
   try {

@@ -1,6 +1,6 @@
 import { franc } from 'franc';
 
-const rtlLanguages = [
+const rtlLanguages = new Set([
   'ara', // Arabic
   'fas', // Persian (Farsi)
   'urd', // Urdu
@@ -15,11 +15,11 @@ const rtlLanguages = [
   'pus', // Pashto
   'ksw', // S'gaw Karen
   'mls', // Masalit
-];
+]);
 
 const detectLanguage = (text: string) => franc(text, { minLength: 3 });
 
-export const langDirection = (text: string): 'rtl' | 'ltr' => {
+export const getLangDirection = (text: string): 'rtl' | 'ltr' => {
   const langCode = detectLanguage(text);
-  return rtlLanguages.includes(langCode) ? 'rtl' : 'ltr';
+  return rtlLanguages.has(langCode) ? 'rtl' : 'ltr';
 };

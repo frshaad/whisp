@@ -1,11 +1,14 @@
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import type { SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
 import { signupAction } from '@/actions/signup-action';
-import { SignupFormValues, signupSchema } from '@/lib/schema/auth-schema';
+import type { SignupFormValues } from '@/lib/schema/auth-schema';
+import { signupSchema } from '@/lib/schema/auth-schema';
 
 export const useSignupForm = () => {
   const router = useRouter();
@@ -22,8 +25,11 @@ export const useSignupForm = () => {
     },
   });
 
-  const handleFormSubmit: SubmitHandler<SignupFormValues> = async (data, e) => {
-    e?.preventDefault();
+  const handleFormSubmit: SubmitHandler<SignupFormValues> = async (
+    data,
+    event
+  ) => {
+    event?.preventDefault();
     setIsSubmitting(true);
 
     try {
@@ -35,7 +41,7 @@ export const useSignupForm = () => {
       } else {
         toast.error(result.message);
       }
-    } catch (error) {
+    } catch {
       toast.error('Something went wrong during sign up.');
     } finally {
       setIsSubmitting(false);

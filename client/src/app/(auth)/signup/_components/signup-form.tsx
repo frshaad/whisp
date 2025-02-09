@@ -11,8 +11,8 @@ export default function SignUpForm() {
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(handleFormSubmit)}
         className="space-y-6"
+        onSubmit={form.handleSubmit(handleFormSubmit)}
       >
         <AuthInputs form={form} type="signup" />
         <div className="space-y-4">

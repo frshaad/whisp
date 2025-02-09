@@ -1,9 +1,9 @@
 import UserPosts from '../_components/user-posts';
 
-type Props = {
+type Properties = {
   params: { username: string };
 };
 
-export default function ProfilePage({ params: { username } }: Props) {
+export default function ProfilePage({ params: { username } }: Properties) {
   return <UserPosts username={username} />;
 }

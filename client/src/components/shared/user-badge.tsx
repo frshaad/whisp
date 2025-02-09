@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 import { CardDescription, CardTitle } from '@/components/ui/card';
-import { UserBadgeProps } from '@/types/user';
+import type { UserBadgeProperties } from '@/types/user';
 
 import UserAvatar from './user-avatar';
 
@@ -9,9 +9,9 @@ export default function UserBadge({
   fullname,
   username,
   profileImg,
-}: UserBadgeProps) {
+}: UserBadgeProperties) {
   return (
-    <Link href={`/profile/${username}`} className="flex items-center gap-3">
+    <Link className="flex items-center gap-3" href={`/profile/${username}`}>
       <UserAvatar fullname={fullname} profileImg={profileImg} />
 
       <div className="w-32 space-y-0.5">

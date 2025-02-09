@@ -1,5 +1,5 @@
 import UserBadge from '@/components/shared/user-badge';
-import { User } from '@/types/user';
+import type { User } from '@/types/user';
 
 import FollowButton from '../shared/follow-button';
 
@@ -8,8 +8,8 @@ export default function SuggestionItem(user: User) {
     <div className="flex w-full items-center justify-between gap-3">
       <UserBadge
         fullname={user.fullname}
-        username={user.username}
         profileImg={user.profileImg}
+        username={user.username}
       />
       <FollowButton userId={user._id} username={user.username} />
     </div>

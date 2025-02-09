@@ -11,8 +11,8 @@ export default function LoginForm() {
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(handleFormSubmit)}
         className="space-y-6"
+        onSubmit={form.handleSubmit(handleFormSubmit)}
       >
         <AuthInputs form={form} type="login" />
         <div className="space-y-4">

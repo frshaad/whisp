@@ -1,15 +1,16 @@
-import { Heart, UserPlus } from 'lucide-react';
 import Link from 'next/link';
+
+import { Heart, UserPlus } from 'lucide-react';
 
 import { Card } from '@/components/ui/card';
 
-type Props = {
+type Properties = {
   type: 'follow' | 'like';
   link: string;
   user: string;
 };
 
-export default function NotificationCard({ type, link, user }: Props) {
+export default function NotificationCard({ type, link, user }: Properties) {
   return (
     <Link href={link}>
       <Card className="flex flex-row items-center gap-5 px-6 py-3 text-sm">

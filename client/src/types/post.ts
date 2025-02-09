@@ -1,15 +1,15 @@
-import { UserBadgeProps } from './user';
+import type { UserBadgeProperties } from './user';
 
 export type Post = {
   _id: string;
-  user: UserBadgeProps;
+  user: UserBadgeProperties;
   text?: string;
   img?: string;
   likes: string[];
   comments: Array<{
     _id: string;
     text: string;
-    user: UserBadgeProps;
+    user: UserBadgeProperties;
   }>;
   createdAt: Date;
   updatedAt: Date;

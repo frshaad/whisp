@@ -1,10 +1,12 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Dot, PenLine } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Dot, PenLine } from 'lucide-react';
+import type { SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
 import UserAvatar from '@/components/shared/user-avatar';
@@ -26,7 +28,8 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { useAuthUser } from '@/hooks/use-auth-user';
 import api from '@/lib/api';
-import { NewPostSchema, NewPostValues } from '@/lib/schema/post-schema';
+import type { NewPostValues } from '@/lib/schema/post-schema';
+import { NewPostSchema } from '@/lib/schema/post-schema';
 
 export default function NewPost() {
   const { user: authUser } = useAuthUser();
@@ -37,8 +40,11 @@ export default function NewPost() {
     resolver: zodResolver(NewPostSchema),
   });
 
-  const handleFormSubmit: SubmitHandler<NewPostValues> = async (data, e) => {
-    e?.preventDefault();
+  const handleFormSubmit: SubmitHandler<NewPostValues> = async (
+    data,
+    event
+  ) => {
+    event?.preventDefault();
 
     try {
       setIsSubmitting(true);
@@ -55,7 +61,7 @@ export default function NewPost() {
     } catch (error: any) {
       toast.error(
         error.response?.data?.message ||
-          'Something went wrong during creating post',
+          'Something went wrong during creating post'
       );
     } finally {
       setIsSubmitting(false);
@@ -66,7 +72,7 @@ export default function NewPost() {
     <Dialog>
       <DialogTrigger asChild>
         <li className="flex items-center">
-          <Dot size={30} className="opacity-0" />
+          <Dot className="opacity-0" size={30} />
           <Button className="gap-3">
             <PenLine size={22} />
             <span>New Post</span>
@@ -84,8 +90,8 @@ export default function NewPost() {
           />
           <Form {...form}>
             <form
-              onSubmit={form.handleSubmit(handleFormSubmit)}
               className="w-10/12 space-y-6"
+              onSubmit={form.handleSubmit(handleFormSubmit)}
             >
               <FormField
                 control={form.control}
@@ -94,8 +100,8 @@ export default function NewPost() {
                   <FormItem>
                     <FormControl>
                       <Textarea
-                        placeholder="What is happening?!"
                         className="w-full resize-none"
+                        placeholder="What is happening?!"
                         rows={5}
                         {...field}
                       />
@@ -106,8 +112,8 @@ export default function NewPost() {
               />
 
               <div className="flex w-full items-center justify-between">
-                <div></div>
-                <Button type="submit" disabled={isSubmitting}>
+                <div />
+                <Button disabled={isSubmitting} type="submit">
                   {isSubmitting ? 'Posting...' : 'Post'}
                 </Button>
               </div>

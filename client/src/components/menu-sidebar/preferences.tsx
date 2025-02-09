@@ -17,10 +17,10 @@ export default function Preferences() {
     <Dialog>
       <DialogTrigger asChild>
         <li className="flex items-center">
-          <Dot size={30} className="opacity-0" />
+          <Dot className="opacity-0" size={30} />
           <Button
-            variant="ghost"
             className="w-full justify-start gap-3 text-muted-foreground"
+            variant="ghost"
           >
             <Bolt size={22} />
             <span>Settings</span>
@@ -39,12 +39,12 @@ export default function Preferences() {
           <p className="flex-1">Language</p>
           <Tabs defaultValue="english">
             <TabsList>
-              <TabsTrigger value="english" className="gap-2">
+              <TabsTrigger className="gap-2" value="english">
                 English
               </TabsTrigger>
               <TabsTrigger
-                value="farsi"
                 className={cn('gap-2', vazir.className)}
+                value="farsi"
               >
                 فارسی
               </TabsTrigger>
@@ -56,15 +56,15 @@ export default function Preferences() {
           <p className="flex-1">Theme Mode</p>
           <Tabs defaultValue="system">
             <TabsList>
-              <TabsTrigger value="light" className="gap-2">
+              <TabsTrigger className="gap-2" value="light">
                 <Sun size={16} />
                 Light
               </TabsTrigger>
-              <TabsTrigger value="dark" className="gap-2">
+              <TabsTrigger className="gap-2" value="dark">
                 <Moon size={16} />
                 Dark
               </TabsTrigger>
-              <TabsTrigger value="system" className="gap-2">
+              <TabsTrigger className="gap-2" value="system">
                 <MonitorSmartphone size={16} />
                 System
               </TabsTrigger>
@@ -74,21 +74,21 @@ export default function Preferences() {
 
         <div className="flex items-center">
           <p className="flex-1">Theme Palette</p>
-          <Tabs defaultValue="zinc" className="">
+          <Tabs className="" defaultValue="zinc">
             <TabsList>
-              <TabsTrigger value="zinc" className="gap-2">
+              <TabsTrigger className="gap-2" value="zinc">
                 <div className="size-4 rounded-full bg-[#18181B]" />
                 Zinc
               </TabsTrigger>
-              <TabsTrigger value="blue" className="gap-2">
+              <TabsTrigger className="gap-2" value="blue">
                 <div className="size-4 rounded-full bg-[#2463EB]" />
                 Blue
               </TabsTrigger>
-              <TabsTrigger value="green" className="gap-2">
+              <TabsTrigger className="gap-2" value="green">
                 <div className="size-4 rounded-full bg-[#16A249]" />
                 Green
               </TabsTrigger>
-              <TabsTrigger value="rose" className="gap-2">
+              <TabsTrigger className="gap-2" value="rose">
                 <div className="size-4 rounded-full bg-[#DD1D4A]" />
                 Rose
               </TabsTrigger>

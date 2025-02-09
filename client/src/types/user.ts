@@ -14,4 +14,7 @@ export type User = {
   updatedAt?: Date;
 };
 
-export type UserBadgeProps = Pick<User, 'fullname' | 'username' | 'profileImg'>;
+export type UserBadgeProperties = Pick<
+  User,
+  'fullname' | 'username' | 'profileImg'
+>;

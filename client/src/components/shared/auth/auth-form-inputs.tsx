@@ -1,31 +1,34 @@
-import { UseFormReturn } from 'react-hook-form';
+import type { UseFormReturn } from 'react-hook-form';
 
-import RenderFormField from '@/components/shared/auth/RenderFormField';
-import { LoginFormValues, SignupFormValues } from '@/lib/schema/auth-schema';
+import RenderFormField from '@/components/shared/auth/render-form-field';
+import type {
+  LoginFormValues,
+  SignupFormValues,
+} from '@/lib/schema/auth-schema';
 
-type Props = {
+type Properties = {
   form:
     | UseFormReturn<SignupFormValues, any, undefined>
     | UseFormReturn<LoginFormValues, any, undefined>;
   type: 'login' | 'signup';
 };
 
-export default function AuthInputs({ type, form }: Props) {
+export default function AuthInputs({ type, form }: Properties) {
   if (type === 'login') {
     return (
       <div className="space-y-3">
         <RenderFormField
-          name="username"
-          label="Username"
-          type="text"
-          placeholder="johndoe"
           control={form.control}
+          label="Username"
+          name="username"
+          placeholder="johndoe"
+          type="text"
         />
         <RenderFormField
-          name="password"
-          label="Password"
-          type="password"
           control={form.control}
+          label="Password"
+          name="password"
+          type="password"
         />
       </div>
     );
@@ -34,37 +37,37 @@ export default function AuthInputs({ type, form }: Props) {
   return (
     <div className="space-y-3">
       <RenderFormField
-        name="fullname"
+        control={form.control}
         label="Full Name"
-        type="text"
+        name="fullname"
         placeholder="John Doe"
-        control={form.control}
+        type="text"
       />
       <RenderFormField
-        name="username"
+        control={form.control}
         label="Username"
-        type="text"
+        name="username"
         placeholder="johndoe"
-        control={form.control}
-      />
-      <RenderFormField
-        name="email"
-        label="Email"
         type="text"
+      />
+      <RenderFormField
+        control={form.control}
+        label="Email"
+        name="email"
         placeholder="johndoe@example.com"
-        control={form.control}
+        type="text"
       />
       <RenderFormField
-        name="password"
+        control={form.control}
         label="Password"
+        name="password"
         type="password"
-        control={form.control}
       />
       <RenderFormField
-        name="passwordConfirm"
-        label="Confirm Password"
-        type="password"
         control={form.control}
+        label="Confirm Password"
+        name="passwordConfirm"
+        type="password"
       />
     </div>
   );

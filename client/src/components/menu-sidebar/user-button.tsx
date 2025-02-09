@@ -43,7 +43,7 @@ export default function UserButton() {
         <DropdownMenuItem>
           <Link href={`/profile/${user.username}`}>Go to profile</Link>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={logout} className="cursor-pointer">
+        <DropdownMenuItem className="cursor-pointer" onClick={logout}>
           Log Out
         </DropdownMenuItem>
       </DropdownMenuContent>

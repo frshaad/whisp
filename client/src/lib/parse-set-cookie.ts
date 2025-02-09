@@ -1,31 +1,37 @@
 const normalizeCookieOptions = (options: Record<string, string | boolean>) => {
   const normalizedOptions: Record<string, any> = {};
-  Object.keys(options).forEach((key) => {
+  for (const key of Object.keys(options)) {
     const lowerKey = key.toLowerCase();
     switch (lowerKey) {
-      case 'max-age':
-        normalizedOptions.maxAge = parseInt(options[key] as string, 10);
+      case 'max-age': {
+        normalizedOptions.maxAge = Number.parseInt(options[key] as string, 10);
         break;
-      case 'httponly':
+      }
+      case 'httponly': {
         normalizedOptions.httpOnly = true;
         break;
-      case 'secure':
+      }
+      case 'secure': {
         normalizedOptions.secure = true;
         break;
-      case 'samesite':
+      }
+      case 'samesite': {
         normalizedOptions.sameSite = options[key].toString().toLowerCase() as
           | 'strict'
           | 'lax'
           | 'none';
         break;
-      case 'path':
+      }
+      case 'path': {
         normalizedOptions.path = options[key];
         break;
-      default:
+      }
+      default: {
         // Add any other options you may want to support here
         normalizedOptions[key] = options[key];
+      }
     }
-  });
+  }
   return normalizedOptions;
 };
 
@@ -37,18 +43,16 @@ export const parseSetCookie = (cookieString: string) => {
   const [name, value] = nameValue.split('=');
 
   // Parse the options (e.g., HttpOnly, Secure, Path, Max-Age, etc.)
-  const cookieOptions = options.reduce(
-    (acc, option) => {
-      const [key, val] = option.split('=');
-      if (val) {
-        acc[key] = val; // Store key-value pairs for options
-      } else {
-        acc[option] = true; // Store boolean options (e.g., HttpOnly, Secure)
-      }
-      return acc;
-    },
-    {} as Record<string, string | boolean>,
-  );
+  const cookieOptions: Record<string, string | boolean> = {};
+
+  for (const option of options) {
+    const [key, value_] = option.split('=');
+    if (value_ === undefined) {
+      cookieOptions[option] = true; // Store boolean options (e.g., HttpOnly, Secure)
+    } else {
+      cookieOptions[key] = value_; // Store key-value pairs for options
+    }
+  }
 
   const normalizedOptions = normalizeCookieOptions(cookieOptions);
 

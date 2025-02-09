@@ -1,15 +1,16 @@
-import { Podcast } from 'lucide-react';
 import Link from 'next/link';
+
+import { Podcast } from 'lucide-react';
 
 import { pacifico } from '@/lib/fonts';
 import { cn } from '@/lib/utils';
 
-type Props = React.ComponentPropsWithoutRef<'div'>;
+type Properties = React.ComponentPropsWithoutRef<'div'>;
 
-export default function Logo(props: Props) {
+export default function Logo(properties: Properties) {
   return (
-    <div {...props}>
-      <Link href="/" className="flex items-center gap-2">
+    <div {...properties}>
+      <Link className="flex items-center gap-2" href="/">
         <Podcast size={36} />
         <h1 className={cn('text-xl', pacifico.className)}>Whisp</h1>
       </Link>

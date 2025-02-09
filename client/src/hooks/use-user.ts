@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import api from '@/lib/api';
-import { User } from '@/types/user';
+import type { User } from '@/types/user';
 
 type ReturnType = {
   status: string;
@@ -18,14 +18,14 @@ export const useUser = (username: string) => {
       try {
         const response = await api.get(`/users/profile/${username}`);
         return response.data;
-      } catch (err: any) {
-        if (err.response?.status === 401) {
+      } catch (error_: any) {
+        if (error_.response?.status === 401) {
           // If the user is not authenticated, redirect to login
           toast.error('User not authenticated. Redirecting to login.');
         } else {
           toast.error('Failed to fetch user data. Please try again.');
         }
-        throw err;
+        throw error_;
       }
     },
     refetchOnWindowFocus: false,

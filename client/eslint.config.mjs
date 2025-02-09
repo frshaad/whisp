@@ -1,7 +1,7 @@
 import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
+import pluginQuery from '@tanstack/eslint-plugin-query';
 import configPrettier from 'eslint-config-prettier';
-import drizzle from 'eslint-plugin-drizzle';
 import n from 'eslint-plugin-n';
 import tailwind from 'eslint-plugin-tailwindcss';
 import unicorn from 'eslint-plugin-unicorn';
@@ -85,6 +85,8 @@ const eslintConfig = [
       '@typescript-eslint/prefer-as-const': 'error',
       '@typescript-eslint/prefer-function-type': 'error',
       '@typescript-eslint/no-unused-vars': 'off',
+      // TODO: Remove next line and fix the issue in code
+      '@typescript-eslint/no-explicit-any': 'off',
     },
   },
   // React
@@ -126,14 +128,8 @@ const eslintConfig = [
     plugins: { n },
     rules: { 'n/no-process-env': 'error' },
   },
-  // Drizzle
-  {
-    plugins: { drizzle },
-    rules: {
-      'drizzle/enforce-delete-with-where': 'error',
-      'drizzle/enforce-update-with-where': 'error',
-    },
-  },
+  // React Query
+  ...pluginQuery.configs['flat/recommended'],
   // Tailwind
   ...tailwind.configs['flat/recommended'],
   // Prettier

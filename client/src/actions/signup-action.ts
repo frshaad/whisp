@@ -4,36 +4,38 @@ import { cookies } from 'next/headers';
 
 import api from '@/lib/api';
 import { parseSetCookie } from '@/lib/parse-set-cookie';
-import { SignupFormValues } from '@/lib/schema/auth-schema';
-import { AuthActionResult, AuthSuccessResponse } from '@/types/auth-actions';
+import type { SignupFormValues } from '@/lib/schema/auth-schema';
+import type {
+  AuthActionResult,
+  AuthSuccessResponse,
+} from '@/types/auth-actions';
 
 export const signupAction = async (
-  data: SignupFormValues,
+  data: SignupFormValues
 ): Promise<AuthActionResult> => {
   try {
-    const res = await api.post<AuthSuccessResponse>('/auth/signup', data, {
+    const response = await api.post<AuthSuccessResponse>('/auth/signup', data, {
       withCredentials: true,
     });
 
-    if (res.status >= 200 && res.status < 300) {
-      const cookieStore = cookies();
-      const setCookieHeader = res.headers['set-cookie'];
+    if (response.status >= 200 && response.status < 300) {
+      const cookieStore = await cookies();
+      const setCookieHeader = response.headers['set-cookie'];
 
       if (setCookieHeader) {
-        setCookieHeader.forEach((cookie) => {
+        for (const cookie of setCookieHeader) {
           const { name, value, options } = parseSetCookie(cookie);
 
           cookieStore.set(name, value, options);
-        });
+        }
       }
 
-      return res.data;
-    } else {
-      return {
-        status: 'failed',
-        message: 'Sign up failed. Please check your inputs.',
-      };
+      return response.data;
     }
+    return {
+      status: 'failed',
+      message: 'Sign up failed. Please check your inputs.',
+    };
   } catch (error: any) {
     if (error.response && error.response.data) {
       return {

@@ -1,11 +1,14 @@
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import type { SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
 import { loginAction } from '@/actions/login-action';
-import { LoginFormValues, loginSchema } from '@/lib/schema/auth-schema';
+import type { LoginFormValues } from '@/lib/schema/auth-schema';
+import { loginSchema } from '@/lib/schema/auth-schema';
 
 export const useLoginForm = () => {
   const router = useRouter();

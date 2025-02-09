@@ -1,10 +1,10 @@
 import { type NextRequest, NextResponse } from 'next/server';
 
-const PUBLIC_PATHS = ['/login', '/signup'];
+const PUBLIC_PATHS = new Set(['/login', '/signup']);
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.has('jwt');
-  const isPublicPath = PUBLIC_PATHS.includes(request.nextUrl.pathname);
+  const isPublicPath = PUBLIC_PATHS.has(request.nextUrl.pathname);
 
   if (!token && !isPublicPath) {
     return NextResponse.redirect(new URL('/login', request.url));

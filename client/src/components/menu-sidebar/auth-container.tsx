@@ -1,10 +1,10 @@
 import UserButton from './user-button';
 
-type Props = React.ComponentPropsWithoutRef<'div'>;
+type Properties = React.ComponentPropsWithoutRef<'div'>;
 
-export default function AuthContainer(props: Props) {
+export default function AuthContainer(properties: Properties) {
   return (
-    <div {...props}>
+    <div {...properties}>
       <UserButton />
     </div>
   );

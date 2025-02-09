@@ -6,9 +6,12 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { LoginFormValues, SignupFormValues } from '@/lib/schema/auth-schema';
+import type {
+  LoginFormValues,
+  SignupFormValues,
+} from '@/lib/schema/auth-schema';
 
-type FormFieldProps = {
+type FormFieldProperties = {
   name: keyof SignupFormValues | keyof LoginFormValues;
   label: string;
   type?: string;
@@ -22,7 +25,7 @@ export default function RenderFormField({
   type = 'text',
   placeholder,
   control,
-}: FormFieldProps) {
+}: FormFieldProperties) {
   return (
     <FormField
       control={control}
@@ -31,7 +34,7 @@ export default function RenderFormField({
         <FormItem>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Input type={type} placeholder={placeholder} {...field} />
+            <Input placeholder={placeholder} type={type} {...field} />
           </FormControl>
           <FormMessage />
         </FormItem>

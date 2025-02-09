@@ -1,4 +1,4 @@
-import { AuthActionResult } from '@/types/auth-actions';
+import type { AuthActionResult } from '@/types/auth-actions';
 
 import api from './api';
 

@@ -20,7 +20,7 @@ export default function ForYouFeed() {
   }
 
   return (
-    <ScrollArea type="scroll" className="min-h-screen w-full">
+    <ScrollArea className="min-h-screen w-full" type="scroll">
       <div className="space-y-4 py-4">
         {posts.map((post) => (
           <PostCard key={post._id} post={post}>

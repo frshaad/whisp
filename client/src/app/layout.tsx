@@ -1,11 +1,11 @@
-import './globals.css';
-
 import type { Metadata } from 'next';
 
 import { Toaster } from '@/components/ui/sonner';
 import { inter } from '@/lib/fonts';
 import ReactQueryProvider from '@/providers/react-query-provider';
 import { ThemeProvider } from '@/providers/theme-provider';
+
+import './globals.css';
 
 export const metadata: Metadata = {
   title: {
@@ -27,8 +27,8 @@ export default function RootLayout({
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
-          enableSystem
           disableTransitionOnChange
+          enableSystem
         >
           <ReactQueryProvider>{children}</ReactQueryProvider>
           <Toaster position="bottom-center" richColors />

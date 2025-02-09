@@ -1,55 +1,59 @@
 'use client';
 
-import { Heart, Images, Newspaper } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+import { Heart, Images, Newspaper } from 'lucide-react';
+
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-type ProfileTabsProps = {
+type ProfileTabsProperties = {
   username: string;
 };
 
-export default function ProfileTabs({ username }: ProfileTabsProps) {
+export default function ProfileTabs({ username }: ProfileTabsProperties) {
   let defaultTab: 'posts' | 'media' | 'liked';
   const pathname = usePathname();
   switch (pathname) {
-    case `/profile/${username}/liked`:
+    case `/profile/${username}/liked`: {
       defaultTab = 'liked';
       break;
-    case `/profile/${username}/media`:
+    }
+    case `/profile/${username}/media`: {
       defaultTab = 'media';
       break;
-    default:
+    }
+    default: {
       defaultTab = 'posts';
       break;
+    }
   }
 
   return (
     <Tabs defaultValue={defaultTab}>
       <TabsList className="w-full">
-        <TabsTrigger value="posts" className="flex-1" asChild>
+        <TabsTrigger className="flex-1" value="posts" asChild>
           <Link
-            href={`/profile/${username}`}
             className="flex items-center gap-2"
+            href={`/profile/${username}`}
           >
             <Newspaper size={16} />
             All Posts
           </Link>
         </TabsTrigger>
-        <TabsTrigger value="media" className="flex-1" asChild>
+        <TabsTrigger className="flex-1" value="media" asChild>
           <Link
-            href={`/profile/${username}/media`}
             className="flex items-center gap-2"
+            href={`/profile/${username}/media`}
           >
             <Images size={16} />
             Media
           </Link>
         </TabsTrigger>
-        <TabsTrigger value="liked" className="flex-1" asChild>
+        <TabsTrigger className="flex-1" value="liked" asChild>
           <Link
-            href={`/profile/${username}/liked`}
             className="flex items-center gap-2"
+            href={`/profile/${username}/liked`}
           >
             <Heart size={16} />
             Liked

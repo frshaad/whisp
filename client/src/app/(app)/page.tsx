@@ -8,10 +8,10 @@ export default function HomePage() {
     <section className="mx-auto w-11/12 sm:w-full">
       <Tabs defaultValue="foryou">
         <TabsList className="w-full">
-          <TabsTrigger value="foryou" className="flex-1">
+          <TabsTrigger className="flex-1" value="foryou">
             For You
           </TabsTrigger>
-          <TabsTrigger value="following" className="flex-1">
+          <TabsTrigger className="flex-1" value="following">
             Following
           </TabsTrigger>
         </TabsList>

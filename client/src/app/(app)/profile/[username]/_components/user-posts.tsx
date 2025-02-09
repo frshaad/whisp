@@ -3,11 +3,11 @@
 import PostCard from '@/components/post-card';
 import { useUserPosts } from '@/hooks/use-user-posts';
 
-type Props = {
+type Properties = {
   username: string;
 };
 
-export default function UserPosts({ username }: Props) {
+export default function UserPosts({ username }: Properties) {
   const {
     posts: userPosts,
     error,

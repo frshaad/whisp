@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import api from '@/lib/api';
-import { Post } from '@/types/post';
+import type { Post } from '@/types/post';
 
 import { useAuthUser } from './use-auth-user';
 
@@ -15,11 +15,11 @@ export function useLikePost(post: Post) {
         const { data } = await api.post(`/posts/like/${post._id}`);
         return data.message;
       } catch (error: unknown) {
-        if (error instanceof Error) {
-          throw new Error(error.message);
-        } else {
-          throw new Error('An unknown error occurred.');
-        }
+        const error_ =
+          error instanceof Error
+            ? new Error(error.message)
+            : new Error('An unknown error occurred.');
+        throw error_;
       }
     },
     async onMutate() {
@@ -51,9 +51,9 @@ export function useLikePost(post: Post) {
                     ? targetPost.likes.filter((id) => id !== user._id) // Unlike
                     : [...targetPost.likes, user._id], // Like
                 }
-              : item,
+              : item
           );
-        },
+        }
       );
 
       return { previousPosts };
@@ -70,7 +70,7 @@ export function useLikePost(post: Post) {
       console.log(error.message);
       queryClient.setQueryData(
         ['posts', post.user.username],
-        context?.previousPosts,
+        context?.previousPosts
       );
     },
   });

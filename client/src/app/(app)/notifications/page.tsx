@@ -16,16 +16,16 @@ export default function NotificationsPage() {
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
         <NotificationCard
-          type={'follow'}
-          link={'/profile/mahdibahmani'}
-          user={'Mahdi Bahmani'}
+          link="/profile/mahdibahmani"
+          type="follow"
+          user="Mahdi Bahmani"
         />
-        <NotificationCard type={'like'} link="/" user={'Mahdi Bahmani'} />
-        <NotificationCard type={'like'} link="/" user={'Mahdi Bahmani'} />
+        <NotificationCard link="/" type="like" user="Mahdi Bahmani" />
+        <NotificationCard link="/" type="like" user="Mahdi Bahmani" />
         <NotificationCard
-          type={'follow'}
-          link={'/profile/hadinajjar'}
-          user={'Hadi Najjar'}
+          link="/profile/hadinajjar"
+          type="follow"
+          user="Hadi Najjar"
         />
       </CardContent>
     </Card>
