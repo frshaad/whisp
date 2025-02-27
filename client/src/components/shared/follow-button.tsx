@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from 'react';
 
-import type { ButtonProps } from '@/components/ui/button';
+import type { ButtonProperties } from '@/components/ui/button';
 import { Button } from '@/components/ui/button';
 import { useAuthUser } from '@/hooks/use-auth-user';
 import { useFollow } from '@/hooks/use-follow';
 
-type Properties = ButtonProps & {
+type Properties = ButtonProperties & {
   userId: string;
   username: string;
 };

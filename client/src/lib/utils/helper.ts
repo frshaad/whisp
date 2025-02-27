@@ -8,5 +8,7 @@ export function getAbbreviation(name: string): string {
 }
 
 export function sleep(s: number) {
-  return new Promise((resolve) => setTimeout(resolve, s * 1000));
+  return new Promise((resolve) => {
+    setTimeout(resolve, s * 1000);
+  });
 }

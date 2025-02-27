@@ -3,12 +3,13 @@ import { redirect } from 'next/navigation';
 
 import Logo from '@/components/shared/logo';
 
-export default function AuthLayout({
+export default async function AuthLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const jwt = cookies().has('jwt');
+  const cookie = await cookies();
+  const jwt = cookie.has('jwt');
 
   if (jwt) {
     redirect('/');

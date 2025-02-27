@@ -1,9 +1,11 @@
 import UserPosts from '../_components/user-posts';
 
 type Properties = {
-  params: { username: string };
+  params: Promise<{ username: string }>;
 };
 
-export default function ProfilePage({ params: { username } }: Properties) {
+export default async function ProfilePage({ params }: Properties) {
+  const { username } = await params;
+
   return <UserPosts username={username} />;
 }
