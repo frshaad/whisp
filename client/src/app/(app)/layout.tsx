@@ -1,4 +1,4 @@
-import ExploreSidebar from '@/components/explolre-sidebar';
+import ExploreSidebar from '@/components/explore-sidebar';
 import MenuSidebar from '@/components/menu-sidebar';
 
 export default function AppLayout({
