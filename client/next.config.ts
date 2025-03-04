@@ -1,9 +1,5 @@
 import type { NextConfig } from 'next';
 
-import { validateEnvironment } from '@/lib/env';
-
-validateEnvironment();
-
 const nextConfig: NextConfig = {
   logging: {
     fetches: {
@@ -17,16 +13,6 @@ const nextConfig: NextConfig = {
         hostname: 'res.cloudinary.com',
       },
     ],
-  },
-
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.resolve.fallback = {
-        fs: false,
-      };
-    }
-
-    return config;
   },
 };
 

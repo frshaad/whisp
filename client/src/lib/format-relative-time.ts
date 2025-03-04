@@ -1,17 +1,21 @@
 export const formatRelativeTime = (date: Date): string => {
   const now = new Date();
   const diffInSeconds = Math.floor(
-    (now.getTime() - new Date(date).getTime()) / 1000
+    (now.getTime() - new Date(date).getTime()) / 1000,
   );
 
   const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
 
   if (diffInSeconds < 60) {
     return rtf.format(-diffInSeconds, 'second');
-  } else if (diffInSeconds < 3600) {
+  }
+
+  if (diffInSeconds < 3600) {
     const minutes = Math.floor(diffInSeconds / 60);
     return rtf.format(-minutes, 'minute');
-  } else if (diffInSeconds < 86_400) {
+  }
+
+  if (diffInSeconds < 86_400) {
     const hours = Math.floor(diffInSeconds / 3600);
     return rtf.format(-hours, 'hour');
   }

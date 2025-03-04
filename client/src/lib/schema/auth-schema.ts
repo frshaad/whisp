@@ -12,7 +12,7 @@ export const signupSchema = z
       .toLowerCase()
       .regex(
         usernameRegex,
-        'Username must consist of lowercase letters, numbers, and underscores'
+        'Username must consist of lowercase letters, numbers, and underscores',
       ),
     email: z.string().trim().email('Invalid email address').toLowerCase(),
     password: z
@@ -31,7 +31,7 @@ export const signupSchema = z
     {
       message: 'Passwords must match!',
       path: ['passwordConfirm'],
-    }
+    },
   );
 
 export const loginSchema = z.object({
