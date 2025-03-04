@@ -2,9 +2,9 @@ import { v2 as cloudinary } from 'cloudinary';
 import type { Request, Response } from 'express';
 import type mongoose from 'mongoose';
 
-import Notification from '../models/notification.model';
-import Post from '../models/post.model';
-import User from '../models/user.model';
+import { Notification } from '../models/notification.model';
+import { Post } from '../models/post.model';
+import { User } from '../models/user.model';
 
 export const createPost = async (req: Request, res: Response) => {
   try {

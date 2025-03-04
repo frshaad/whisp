@@ -1,9 +1,8 @@
 import type { Request, Response } from 'express';
 import type mongoose from 'mongoose';
 
-import Notification from '../models/notification.model';
-import User from '../models/user.model';
-import type { UserType } from '../schemas/user.schema';
+import { Notification } from '../models/notification.model';
+import { User, type UserType, type UserTypeWithId } from '../models/user.model';
 import { handleImageUpload, handlePasswordUpdate } from '../utils/helper';
 
 export const getUserProfile = async (req: Request, res: Response) => {
@@ -94,7 +93,7 @@ export const getSuggestedUsers = async (req: Request, res: Response) => {
     const currentUserFollowing =
       await User.findById(currentUserId).select('following');
 
-    const users: UserType[] = await User.aggregate([
+    const users: UserTypeWithId[] = await User.aggregate([
       { $match: { _id: { $ne: currentUserId } } },
       { $sample: { size: 10 } },
       { $project: { password: 0 } },
@@ -102,8 +101,8 @@ export const getSuggestedUsers = async (req: Request, res: Response) => {
 
     const filteredUsers = users.filter(
       (user) =>
-        !currentUserFollowing?.following.includes(
-          user._id as mongoose.Types.ObjectId,
+        !currentUserFollowing?.following.some(
+          (id) => id.toString() === user._id.toString(),
         ),
     );
     const suggestedUsers = filteredUsers.slice(0.4);

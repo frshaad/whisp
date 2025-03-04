@@ -1,7 +1,31 @@
-import mongoose from 'mongoose';
+import { type InferSchemaType, Schema, model } from 'mongoose';
 
-import { notificationSchema } from '../schemas/notification.schema';
+const notificationSchema = new Schema(
+  {
+    from: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    to: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    type: {
+      type: String,
+      required: true,
+      enum: ['follow', 'like'],
+    },
+    isRead: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  { timestamps: true },
+);
 
-const Notification = mongoose.model('Notification', notificationSchema);
+type NotificationType = InferSchemaType<typeof notificationSchema>;
+const Notification = model('Notification', notificationSchema);
 
-export default Notification;
+export { Notification, type NotificationType };

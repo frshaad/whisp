@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import { v2 as cloudinary } from 'cloudinary';
 
-import type { UserType } from '../schemas/user.schema';
+import type { UserType } from '../models/user.model';
 import hashPassword from './hashPassword';
 import { validatePassword } from './validator-utils';
 

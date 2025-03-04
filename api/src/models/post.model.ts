@@ -1,7 +1,30 @@
-import mongoose from 'mongoose';
+import { type InferSchemaType, Schema, model } from 'mongoose';
 
-import { postSchema } from '../schemas/post.schema';
+const postSchema = new Schema(
+  {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    text: { type: String },
+    img: { type: String },
+    likes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    comments: [
+      {
+        text: { type: String, required: true },
+        user: {
+          type: Schema.Types.ObjectId,
+          ref: 'User',
+          required: true,
+        },
+      },
+    ],
+  },
+  { timestamps: true },
+);
 
-const Post = mongoose.model('Post', postSchema);
+type PostType = InferSchemaType<typeof postSchema>;
+const Post = model('Post', postSchema);
 
-export default Post;
+export { Post, type PostType };

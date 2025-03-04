@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
 import type mongoose from 'mongoose';
 
-import Notification from '../models/notification.model';
+import { Notification } from '../models/notification.model';
 
 export const getNotifications = async (req: Request, res: Response) => {
   try {

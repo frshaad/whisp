@@ -2,7 +2,7 @@ import type { NextFunction, Request, Response } from 'express';
 import type { JwtPayload } from 'jsonwebtoken';
 import jwt from 'jsonwebtoken';
 
-import User from '../models/user.model';
+import { User } from '../models/user.model';
 
 const authMiddleware = async (
   req: Request,
