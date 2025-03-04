@@ -51,9 +51,9 @@ export function useLikePost(post: Post) {
                     ? targetPost.likes.filter((id) => id !== user._id) // Unlike
                     : [...targetPost.likes, user._id], // Like
                 }
-              : item
+              : item,
           );
-        }
+        },
       );
 
       return { previousPosts };
@@ -70,7 +70,7 @@ export function useLikePost(post: Post) {
       console.log(error.message);
       queryClient.setQueryData(
         ['posts', post.user.username],
-        context?.previousPosts
+        context?.previousPosts,
       );
     },
   });

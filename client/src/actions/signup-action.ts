@@ -11,7 +11,7 @@ import type {
 } from '@/types/auth-actions';
 
 export const signupAction = async (
-  data: SignupFormValues
+  data: SignupFormValues,
 ): Promise<AuthActionResult> => {
   try {
     const response = await api.post<AuthSuccessResponse>('/auth/signup', data, {

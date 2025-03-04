@@ -28,7 +28,7 @@ export default function NavItem({
       <Dot
         className={cn(
           'text-primary opacity-0 transition',
-          isActiveLink && 'opacity-100'
+          isActiveLink && 'opacity-100',
         )}
         size={30}
       />
@@ -36,7 +36,7 @@ export default function NavItem({
         <Button
           className={cn(
             'w-full justify-start gap-3 text-muted-foreground',
-            isActiveLink && 'text-primary hover:text-primary'
+            isActiveLink && 'text-primary hover:text-primary',
           )}
           variant="ghost"
         >

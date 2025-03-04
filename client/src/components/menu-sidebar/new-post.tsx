@@ -42,7 +42,7 @@ export default function NewPost() {
 
   const handleFormSubmit: SubmitHandler<NewPostValues> = async (
     data,
-    event
+    event,
   ) => {
     event?.preventDefault();
 
@@ -61,7 +61,7 @@ export default function NewPost() {
     } catch (error: any) {
       toast.error(
         error.response?.data?.message ||
-          'Something went wrong during creating post'
+          'Something went wrong during creating post',
       );
     } finally {
       setIsSubmitting(false);

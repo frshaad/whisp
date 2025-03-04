@@ -20,7 +20,7 @@ type FormFieldContextValue<
 };
 
 const FormFieldContext = React.createContext<FormFieldContextValue>(
-  {} as FormFieldContextValue
+  {} as FormFieldContextValue,
 );
 
 const FormField = <
@@ -34,7 +34,7 @@ const FormField = <
     () => ({
       name,
     }),
-    [name]
+    [name],
   );
   return (
     <FormFieldContext.Provider value={memoizedName}>
@@ -48,7 +48,7 @@ type FormItemContextValue = {
 };
 
 const FormItemContext = React.createContext<FormItemContextValue>(
-  {} as FormItemContextValue
+  {} as FormItemContextValue,
 );
 
 const useFormField = () => {

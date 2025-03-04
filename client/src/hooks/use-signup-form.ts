@@ -27,7 +27,7 @@ export const useSignupForm = () => {
 
   const handleFormSubmit: SubmitHandler<SignupFormValues> = async (
     data,
-    event
+    event,
   ) => {
     event?.preventDefault();
     setIsSubmitting(true);

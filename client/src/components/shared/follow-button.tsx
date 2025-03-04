@@ -20,7 +20,7 @@ export default function FollowButton({
   const { user: authUser } = useAuthUser();
 
   const [isAlreadyFollowed, setIsAlreadyFollowed] = useState<boolean>(
-    authUser?.following.includes(userId) as boolean
+    authUser?.following.includes(userId) as boolean,
   );
   const { handleFollow } = useFollow(username);
 

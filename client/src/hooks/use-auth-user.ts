@@ -8,7 +8,7 @@ import api from '@/lib/api';
 import type { User } from '@/types/user';
 
 export function authUserQueryOptions(
-  router: ReturnType<typeof useRouter>
+  router: ReturnType<typeof useRouter>,
 ): UseQueryOptions<User, Error, User, QueryKey> {
   return {
     queryKey: ['authUser'],
@@ -34,7 +34,7 @@ export const useAuthUser = () => {
   const router = useRouter();
 
   const { data, error, isPending, isError, refetch } = useQuery<User>(
-    authUserQueryOptions(router)
+    authUserQueryOptions(router),
   );
 
   const logout = async () => {

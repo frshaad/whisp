@@ -83,7 +83,7 @@ PostCard.Content = memo(() => {
 
   const langDirection = useMemo(
     () => (text ? getLangDirection(text) : 'ltr'),
-    [text]
+    [text],
   );
 
   return (
@@ -92,7 +92,7 @@ PostCard.Content = memo(() => {
         <p
           className={cn(
             'whitespace-pre-wrap',
-            langDirection === 'rtl' && vazir.className
+            langDirection === 'rtl' && vazir.className,
           )}
           dir={langDirection}
         >
@@ -129,7 +129,7 @@ PostCard.Interaction = memo(() => {
         </Button>
       </div>
 
-      {post.user.username === user?.username && <PostCard.DeleteButton />}
+      {post.user?.username === user?.username && <PostCard.DeleteButton />}
     </CardFooter>
   );
 });

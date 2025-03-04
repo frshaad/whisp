@@ -11,7 +11,7 @@ import type {
 } from '@/types/auth-actions';
 
 export const loginAction = async (
-  data: LoginFormValues
+  data: LoginFormValues,
 ): Promise<AuthActionResult> => {
   try {
     const response = await api.post<AuthSuccessResponse>('/auth/login', data, {
