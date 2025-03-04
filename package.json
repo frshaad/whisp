@@ -13,6 +13,6 @@
     "concurrently": "^9.1.2"
   },
   "dependencies": {
-    "nanoid": "^5.0.9"
+    "nanoid": "^5.1.2"
   }
 }
