@@ -4,11 +4,11 @@ import jwt from 'jsonwebtoken';
 
 import { User } from '../models/user.model';
 
-const authMiddleware = async (
+export async function authMiddleware(
   req: Request,
   res: Response,
   next: NextFunction,
-) => {
+) {
   try {
     const token = req.cookies.jwt;
 
@@ -59,6 +59,4 @@ const authMiddleware = async (
       message: 'Invalid token.',
     });
   }
-};
-
-export default authMiddleware;
+}

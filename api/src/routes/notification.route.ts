@@ -5,7 +5,7 @@ import {
   deleteNotifications,
   getNotifications,
 } from '../controllers/notification.controller';
-import authMiddleware from '../middlewares/auth.middleware';
+import { authMiddleware } from '../middlewares/auth.middleware';
 
 const router = Router();
 

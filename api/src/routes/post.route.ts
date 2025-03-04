@@ -10,7 +10,7 @@ import {
   getUserPosts,
   likeUnlikePost,
 } from '../controllers/post.controller';
-import authMiddleware from '../middlewares/auth.middleware';
+import { authMiddleware } from '../middlewares/auth.middleware';
 
 const router = Router();
 

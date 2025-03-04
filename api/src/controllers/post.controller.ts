@@ -6,7 +6,7 @@ import { Notification } from '../models/notification.model';
 import { Post } from '../models/post.model';
 import { User } from '../models/user.model';
 
-export const createPost = async (req: Request, res: Response) => {
+export async function createPost(req: Request, res: Response) {
   try {
     const { text } = req.body;
     let { img } = req.body;
@@ -42,9 +42,9 @@ export const createPost = async (req: Request, res: Response) => {
       message: 'An error occurred while creating the post.',
     });
   }
-};
+}
 
-export const likeUnlikePost = async (req: Request, res: Response) => {
+export async function likeUnlikePost(req: Request, res: Response) {
   try {
     const { postId } = req.params;
     const currentUserId = req.user?._id as mongoose.Types.ObjectId;
@@ -99,9 +99,9 @@ export const likeUnlikePost = async (req: Request, res: Response) => {
       .status(500)
       .json({ status: 'failed', message: 'Internal server error' });
   }
-};
+}
 
-export const deletePost = async (req: Request, res: Response) => {
+export async function deletePost(req: Request, res: Response) {
   try {
     const { postId } = req.params;
     const currentUserId = req.user?._id as mongoose.Types.ObjectId;
@@ -138,9 +138,9 @@ export const deletePost = async (req: Request, res: Response) => {
       .status(500)
       .json({ status: 'failed', message: 'Internal server error' });
   }
-};
+}
 
-export const commentOnPost = async (req: Request, res: Response) => {
+export async function commentOnPost(req: Request, res: Response) {
   try {
     const { postId } = req.params;
     const { text } = req.body;
@@ -171,9 +171,9 @@ export const commentOnPost = async (req: Request, res: Response) => {
       .status(500)
       .json({ status: 'failed', message: 'Internal server error' });
   }
-};
+}
 
-export const getAllPosts = async (req: Request, res: Response) => {
+export async function getAllPosts(req: Request, res: Response) {
   try {
     const authenticatedUserId = req.user?._id;
 
@@ -188,9 +188,9 @@ export const getAllPosts = async (req: Request, res: Response) => {
       .status(500)
       .json({ status: 'failed', message: 'Internal server error' });
   }
-};
+}
 
-export const getLikedPosts = async (req: Request, res: Response) => {
+export async function getLikedPosts(req: Request, res: Response) {
   try {
     const { userId } = req.params;
     const user = await User.findById(userId);
@@ -214,9 +214,9 @@ export const getLikedPosts = async (req: Request, res: Response) => {
       .status(500)
       .json({ status: 'failed', message: 'Internal server error' });
   }
-};
+}
 
-export const getFollowingPosts = async (req: Request, res: Response) => {
+export async function getFollowingPosts(req: Request, res: Response) {
   try {
     const currentUserId = req.user?._id as mongoose.Types.ObjectId;
     const user = await User.findById(currentUserId);
@@ -251,9 +251,9 @@ export const getFollowingPosts = async (req: Request, res: Response) => {
       .status(500)
       .json({ status: 'failed', message: 'Internal server error' });
   }
-};
+}
 
-export const getUserPosts = async (req: Request, res: Response) => {
+export async function getUserPosts(req: Request, res: Response) {
   try {
     const { username } = req.params;
     const user = await User.findOne({ username });
@@ -278,4 +278,4 @@ export const getUserPosts = async (req: Request, res: Response) => {
       .status(500)
       .json({ status: 'failed', message: 'Internal server error' });
   }
-};
+}

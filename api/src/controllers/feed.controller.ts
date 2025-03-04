@@ -2,7 +2,7 @@ import type { Request, Response } from 'express';
 
 import { feedPostsService } from '../services/feed.services';
 
-export const getFeed = async (req: Request, res: Response) => {
+export async function getFeed(req: Request, res: Response) {
   try {
     const { user } = req;
 
@@ -26,4 +26,4 @@ export const getFeed = async (req: Request, res: Response) => {
       message: 'Something went wrong. Please try again later.',
     });
   }
-};
+}

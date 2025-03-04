@@ -1,6 +1,6 @@
 import pino from 'pino';
 
-const log = pino({
+export const log = pino({
   transport: {
     target: 'pino-pretty',
     options: {
@@ -12,5 +12,3 @@ const log = pino({
   },
   timestamp: pino.stdTimeFunctions.isoTime,
 });
-
-export default log;

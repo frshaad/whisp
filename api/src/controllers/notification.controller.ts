@@ -3,7 +3,7 @@ import type mongoose from 'mongoose';
 
 import { Notification } from '../models/notification.model';
 
-export const getNotifications = async (req: Request, res: Response) => {
+export async function getNotifications(req: Request, res: Response) {
   try {
     const userId = req.user?._id;
     const notifications = await Notification.find({ to: userId }).populate({
@@ -19,9 +19,9 @@ export const getNotifications = async (req: Request, res: Response) => {
       .status(500)
       .json({ status: 'failed', message: 'Internal server error' });
   }
-};
+}
 
-export const deleteNotifications = async (req: Request, res: Response) => {
+export async function deleteNotifications(req: Request, res: Response) {
   try {
     const userId = req.user?._id;
 
@@ -36,9 +36,9 @@ export const deleteNotifications = async (req: Request, res: Response) => {
       .status(500)
       .json({ status: 'failed', message: 'Internal server error' });
   }
-};
+}
 
-export const deleteNotification = async (req: Request, res: Response) => {
+export async function deleteNotification(req: Request, res: Response) {
   try {
     const userId = req.user?._id as mongoose.Types.ObjectId;
     const { notificationId } = req.params;
@@ -68,4 +68,4 @@ export const deleteNotification = async (req: Request, res: Response) => {
       .status(500)
       .json({ status: 'failed', message: 'Internal server error' });
   }
-};
+}

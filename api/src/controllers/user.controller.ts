@@ -5,7 +5,7 @@ import { Notification } from '../models/notification.model';
 import { User, type UserType, type UserTypeWithId } from '../models/user.model';
 import { handleImageUpload, handlePasswordUpdate } from '../utils/helper';
 
-export const getUserProfile = async (req: Request, res: Response) => {
+export async function getUserProfile(req: Request, res: Response) {
   try {
     const { username } = req.params;
     const user = await User.findOne({ username }).select('-password');
@@ -23,9 +23,9 @@ export const getUserProfile = async (req: Request, res: Response) => {
       .status(500)
       .json({ status: 'failed', message: 'Internal server error' });
   }
-};
+}
 
-export const followUnfollowUser = async (req: Request, res: Response) => {
+export async function followUnfollowUser(req: Request, res: Response) {
   try {
     const { id } = req.params;
     const currentUserId = (
@@ -84,9 +84,9 @@ export const followUnfollowUser = async (req: Request, res: Response) => {
       .status(500)
       .json({ status: 'failed', message: 'Internal server error' });
   }
-};
+}
 
-export const getSuggestedUsers = async (req: Request, res: Response) => {
+export async function getSuggestedUsers(req: Request, res: Response) {
   try {
     const currentUserId = req.user?._id;
 
@@ -114,9 +114,9 @@ export const getSuggestedUsers = async (req: Request, res: Response) => {
       .status(500)
       .json({ status: 'failed', message: 'Internal server error' });
   }
-};
+}
 
-export const updateUser = async (req: Request, res: Response) => {
+export async function updateUser(req: Request, res: Response) {
   try {
     const {
       fullname,
@@ -191,4 +191,4 @@ export const updateUser = async (req: Request, res: Response) => {
       .status(500)
       .json({ status: 'failed', message: 'Internal server error' });
   }
-};
+}

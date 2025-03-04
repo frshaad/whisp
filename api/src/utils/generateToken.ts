@@ -2,10 +2,7 @@ import type { Response } from 'express';
 import jwt from 'jsonwebtoken';
 import type mongoose from 'mongoose';
 
-export const generateToken = (
-  userId: mongoose.Types.ObjectId,
-  res: Response,
-) => {
+export function generateToken(userId: mongoose.Types.ObjectId, res: Response) {
   if (!process.env.JWT_SECRET) {
     throw new Error('JWT_SECRET is not defined in environment variables');
   }
@@ -20,4 +17,4 @@ export const generateToken = (
     sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
     maxAge: 15 * 24 * 60 * 60 * 1000, // 15 days
   });
-};
+}

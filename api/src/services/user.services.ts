@@ -3,7 +3,7 @@ import type { Response } from 'express';
 
 import { User, type UserType } from '../models/user.model';
 import { generateToken } from '../utils/generateToken';
-import hashPassword from '../utils/hashPassword';
+import { hashPassword } from '../utils/hashPassword';
 
 type LoginData = {
   username: string;
@@ -16,13 +16,13 @@ type SignupData = LoginData & {
   email: string;
 };
 
-export const signupService = async ({
+export async function signupService({
   email,
   fullname,
   password,
   username,
   res,
-}: SignupData): Promise<UserType> => {
+}: SignupData): Promise<UserType> {
   const normalizedUsername = username.toLowerCase();
   const normalizedEmail = email.toLowerCase();
 
@@ -48,13 +48,13 @@ export const signupService = async ({
   generateToken(newUser._id, res);
 
   return newUser;
-};
+}
 
-export const loginService = async ({
+export async function loginService({
   password,
   username,
   res,
-}: LoginData): Promise<UserType> => {
+}: LoginData): Promise<UserType> {
   const normalizedUsername = username.toLowerCase();
 
   const user = await User.findOne({ username: normalizedUsername });
@@ -73,24 +73,24 @@ export const loginService = async ({
   generateToken(user._id, res);
 
   return user;
-};
+}
 
-export const logoutService = (res: Response): void => {
+export function logoutService(res: Response): void {
   res.cookie('jwt', '', {
     maxAge: 0,
     httpOnly: true,
     sameSite: 'strict',
     secure: process.env.NODE_ENV !== 'development',
   });
-};
+}
 
-export const getAuthenticatedUserService = async (
+export async function getAuthenticatedUserService(
   userId: string,
-): Promise<UserType> => {
+): Promise<UserType> {
   const authUser = await User.findById(userId).select('-password');
   if (!authUser) {
     throw new Error('User not found');
   }
 
   return authUser;
-};
+}

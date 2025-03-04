@@ -8,7 +8,7 @@ import {
 } from '../services/user.services';
 
 // Sign Up
-export const signup = async (req: Request, res: Response) => {
+export async function signup(req: Request, res: Response) {
   try {
     const { fullname, username, email, password } = req.body;
     const user = await signupService({
@@ -30,10 +30,10 @@ export const signup = async (req: Request, res: Response) => {
       message: 'Something went wrong. Please try again later.',
     });
   }
-};
+}
 
 // Log In
-export const login = async (req: Request, res: Response) => {
+export async function login(req: Request, res: Response) {
   try {
     const { username, password } = req.body;
     const user = await loginService({ username, password, res });
@@ -52,10 +52,10 @@ export const login = async (req: Request, res: Response) => {
       message: 'Something went wrong. Please try again later.',
     });
   }
-};
+}
 
 // Log Out
-export const logout = async (req: Request, res: Response) => {
+export async function logout(req: Request, res: Response) {
   try {
     logoutService(res);
     res
@@ -68,10 +68,10 @@ export const logout = async (req: Request, res: Response) => {
       message: 'Internal server error',
     });
   }
-};
+}
 
 // Get Authenticated User
-export const getAuthenticatedUser = async (req: Request, res: Response) => {
+export async function getAuthenticatedUser(req: Request, res: Response) {
   try {
     const { user } = req;
 
@@ -98,4 +98,4 @@ export const getAuthenticatedUser = async (req: Request, res: Response) => {
       message: 'Something went wrong. Please try again later.',
     });
   }
-};
+}

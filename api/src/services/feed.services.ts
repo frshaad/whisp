@@ -1,9 +1,9 @@
 import { Post, type PostType } from '../models/post.model';
 import { User, type UserTypeWithId } from '../models/user.model';
 
-export const feedPostsService = async (
+export async function feedPostsService(
   user: UserTypeWithId,
-): Promise<PostType[]> => {
+): Promise<PostType[]> {
   const authUser = await User.findById(user._id).select('following');
   if (!authUser) {
     throw new Error('Authenticated user not found');
@@ -15,4 +15,4 @@ export const feedPostsService = async (
     .exec();
 
   return posts;
-};
+}

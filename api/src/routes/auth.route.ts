@@ -6,7 +6,7 @@ import {
   logout,
   signup,
 } from '../controllers/auth.controller';
-import authMiddleware from '../middlewares/auth.middleware';
+import { authMiddleware } from '../middlewares/auth.middleware';
 import zodMiddleware from '../middlewares/zod.middleware';
 import { loginSchema, signupSchema } from '../validation/auth.validation';
 
