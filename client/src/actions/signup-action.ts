@@ -36,17 +36,17 @@ export const signupAction = async (
       status: 'failed',
       message: 'Sign up failed. Please check your inputs.',
     };
-  } catch (error: any) {
-    if (error.response && error.response.data) {
+  } catch (error: unknown) {
+    if (error instanceof Error) {
       return {
         status: 'failed',
-        message: error.response.data.message || 'Sign up failed.',
+        message: `${error.name} in signup action: ${error.message}`,
+      };
+    } else {
+      return {
+        status: 'failed',
+        message: `Unexpected error type in signup action: ${error}`,
       };
     }
-
-    return {
-      status: 'failed',
-      message: error.message || 'An unknown error occurred.',
-    };
   }
 };

@@ -36,17 +36,17 @@ export const loginAction = async (
       status: 'failed',
       message: 'Login failed. Please check your credentials.',
     };
-  } catch (error: any) {
-    if (error.response && error.response.data) {
+  } catch (error: unknown) {
+    if (error instanceof Error) {
       return {
         status: 'failed',
-        message: error.response.data.message || 'Login failed.',
+        message: `${error.name} in login action: ${error.message}`,
+      };
+    } else {
+      return {
+        status: 'failed',
+        message: `Unexpected error type in login action: ${error}`,
       };
     }
-
-    return {
-      status: 'failed',
-      message: error.message || 'An unknown error occurred.',
-    };
   }
 };

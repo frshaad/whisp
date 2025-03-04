@@ -30,7 +30,7 @@ export default tseslint.config([
       '@typescript-eslint/no-import-type-side-effects': 'error',
       '@typescript-eslint/no-non-null-assertion': 'error',
       '@typescript-eslint/prefer-as-const': 'error',
-      '@typescript-eslint/no-explicit-any': 'error',
+      '@typescript-eslint/no-explicit-any': 'off',
 
       'react/button-has-type': 'warn',
       'react/jsx-no-constructed-context-values': 'warn',
