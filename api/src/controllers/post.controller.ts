@@ -1,9 +1,10 @@
-import { Request, Response } from 'express';
 import { v2 as cloudinary } from 'cloudinary';
-import User from '../models/user.model';
-import Post from '../models/post.model';
-import mongoose from 'mongoose';
+import type { Request, Response } from 'express';
+import type mongoose from 'mongoose';
+
 import Notification from '../models/notification.model';
+import Post from '../models/post.model';
+import User from '../models/user.model';
 
 export const createPost = async (req: Request, res: Response) => {
   try {
@@ -235,8 +236,8 @@ export const getFollowingPosts = async (req: Request, res: Response) => {
       .populate('comments.user', '-password');
 
     res.status(200).json({ status: 'success', feedPosts });
-  } catch (error: any) {
-    if (error.message) {
+  } catch (error: unknown) {
+    if (error instanceof Error) {
       console.error(
         'Error in getFollowingPosts controller',
         error.message,

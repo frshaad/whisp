@@ -1,8 +1,9 @@
-import { v2 as cloudinary } from 'cloudinary';
 import bcrypt from 'bcrypt';
+import { v2 as cloudinary } from 'cloudinary';
+
+import type { UserType } from '../schemas/user.schema';
 import hashPassword from './hashPassword';
 import { validatePassword } from './validator-utils';
-import { UserType } from '../schemas/user.schema';
 
 // Helper function for handling image uploads
 export const handleImageUpload = async (

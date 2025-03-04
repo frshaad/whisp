@@ -1,5 +1,5 @@
-import { NextFunction, Request, Response } from 'express';
-import { ZodSchema } from 'zod';
+import type { NextFunction, Request, Response } from 'express';
+import type { ZodSchema } from 'zod';
 
 const zodMiddleware =
   (schema: ZodSchema) => (req: Request, res: Response, next: NextFunction) => {

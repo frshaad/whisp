@@ -1,7 +1,7 @@
 import Post from '../models/post.model';
 import User from '../models/user.model';
-import { PostType } from '../schemas/post.schema';
-import { UserType } from '../schemas/user.schema';
+import type { PostType } from '../schemas/post.schema';
+import type { UserType } from '../schemas/user.schema';
 
 export const feedPostsService = async (user: UserType): Promise<PostType[]> => {
   const authUser = await User.findById(user._id).select('following');

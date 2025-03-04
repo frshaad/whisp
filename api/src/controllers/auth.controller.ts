@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 
 import {
   getAuthenticatedUserService,
@@ -20,8 +20,8 @@ export const signup = async (req: Request, res: Response) => {
     });
 
     res.status(201).json({ status: 'success', user });
-  } catch (error: any) {
-    if (error.message) {
+  } catch (error: unknown) {
+    if (error instanceof Error) {
       return res.status(400).json({ status: 'failed', message: error.message });
     }
 
@@ -42,8 +42,8 @@ export const login = async (req: Request, res: Response) => {
       status: 'success',
       user,
     });
-  } catch (error: any) {
-    if (error.message) {
+  } catch (error: unknown) {
+    if (error instanceof Error) {
       return res.status(401).json({ status: 'failed', message: error.message });
     }
 
@@ -85,8 +85,8 @@ export const getAuthenticatedUser = async (req: Request, res: Response) => {
     const authUser = await getAuthenticatedUserService(user._id as string);
 
     res.status(200).json({ status: 'success', user: authUser });
-  } catch (error: any) {
-    if (error.message) {
+  } catch (error: unknown) {
+    if (error instanceof Error) {
       return res.status(404).json({
         status: 'failed',
         message: error.message,

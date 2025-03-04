@@ -1,5 +1,6 @@
-import mongoose from 'mongoose';
-import { UserType } from '../../schemas/user.schema';
+import type mongoose from 'mongoose';
+
+import type { UserType } from '../../schemas/user.schema';
 
 export {};
 

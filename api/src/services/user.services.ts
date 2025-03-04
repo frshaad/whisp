@@ -1,7 +1,8 @@
-import { Response } from 'express';
 import bcrypt from 'bcrypt';
+import type { Response } from 'express';
+
 import User from '../models/user.model';
-import { UserType } from '../schemas/user.schema';
+import type { UserType } from '../schemas/user.schema';
 import { generateToken } from '../utils/generateToken';
 import hashPassword from '../utils/hashPassword';
 

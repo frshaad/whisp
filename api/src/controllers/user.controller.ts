@@ -1,9 +1,10 @@
-import { Request, Response } from 'express';
-import mongoose from 'mongoose';
-import User from '../models/user.model';
+import type { Request, Response } from 'express';
+import type mongoose from 'mongoose';
+
 import Notification from '../models/notification.model';
+import User from '../models/user.model';
+import type { UserType } from '../schemas/user.schema';
 import { handleImageUpload, handlePasswordUpdate } from '../utils/helper';
-import { UserType } from '../schemas/user.schema';
 
 export const getUserProfile = async (req: Request, res: Response) => {
   try {

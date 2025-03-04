@@ -1,4 +1,5 @@
-import { Response, Request } from 'express';
+import type { Request, Response } from 'express';
+
 import { feedPostsService } from '../services/feed.services';
 
 export const getFeed = async (req: Request, res: Response) => {
@@ -15,8 +16,8 @@ export const getFeed = async (req: Request, res: Response) => {
     const posts = await feedPostsService(user);
 
     res.status(200).json({ status: 'success', posts });
-  } catch (error: any) {
-    if (error.message) {
+  } catch (error: unknown) {
+    if (error instanceof Error) {
       return res.status(400).json({ status: 'failed', message: error.message });
     }
 

@@ -1,6 +1,6 @@
-import { Response } from 'express';
+import type { Response } from 'express';
 import jwt from 'jsonwebtoken';
-import mongoose from 'mongoose';
+import type mongoose from 'mongoose';
 
 export const generateToken = (
   userId: mongoose.Types.ObjectId,
