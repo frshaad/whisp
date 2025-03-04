@@ -1,10 +1,7 @@
-// @ts-check
 import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
+import pluginQuery from '@tanstack/eslint-plugin-query';
 import configPrettier from 'eslint-config-prettier';
-import n from 'eslint-plugin-n';
-import tailwind from 'eslint-plugin-tailwindcss';
-import unicorn from 'eslint-plugin-unicorn';
 import tseslint from 'typescript-eslint';
 
 const MAX_DEPTH = 4;
@@ -18,50 +15,31 @@ export default tseslint.config([
   { languageOptions: { globals: { React: true } }, ignores: ['node_modules'] },
   ...compat.extends('next/core-web-vitals', 'next/typescript'),
   js.configs.recommended,
-  unicorn.configs.recommended,
-  ...tailwind.configs['flat/recommended'],
+  ...pluginQuery.configs['flat/recommended'],
   {
-    plugins: { n },
     rules: {
-      'prefer-const': 'error',
       'max-depth': ['warn', { max: MAX_DEPTH }],
-      'max-params': ['error', { max: MAX_FN_PARAMS }],
-      'no-var': 'error',
-      'no-use-before-define': 'error',
-      'no-eval': 'error',
-      'no-param-reassign': 'error',
+      'max-params': ['warn', { max: MAX_FN_PARAMS }],
+      'prefer-const': 'warn',
+      'no-eval': 'warn',
+      'no-param-reassign': 'warn',
+      'no-promise-executor-return': 'warn',
+      'no-unreachable-loop': 'warn',
+
       '@typescript-eslint/consistent-type-imports': 'error',
       '@typescript-eslint/no-import-type-side-effects': 'error',
       '@typescript-eslint/no-non-null-assertion': 'error',
       '@typescript-eslint/prefer-as-const': 'error',
-      'react/button-has-type': 'error',
-      'react/jsx-no-constructed-context-values': 'error',
+      '@typescript-eslint/no-explicit-any': 'warn',
+
+      'react/button-has-type': 'warn',
+      'react/jsx-no-constructed-context-values': 'warn',
       'react/no-array-index-key': 'error',
-      'react/self-closing-comp': 'error',
+      'react/jsx-no-useless-fragment': 'warn',
+      'react/no-unstable-nested-components': 'warn',
+
       'jsx-a11y/lang': 'error',
       'jsx-a11y/no-static-element-interactions': 'error',
-      'n/no-process-env': 'error',
-      'unicorn/prevent-abbreviations': [
-        'error',
-        {
-          allowList: {
-            util: true,
-            utils: true,
-            prop: true,
-            props: true,
-            param: true,
-            params: true,
-            env: true,
-            db: true,
-          },
-        },
-      ],
-      'no-promise-executor-return': 'error',
-      'no-unreachable-loop': 'error',
-      '@typescript-eslint/no-explicit-any': 'off', // Be careful
-      'react/jsx-no-useless-fragment': 'error',
-      'react/hook-use-state': 'error',
-      'react/no-unstable-nested-components': 'error',
       'jsx-a11y/click-events-have-key-events': 'error',
       'jsx-a11y/no-noninteractive-element-interactions': 'error',
     },
