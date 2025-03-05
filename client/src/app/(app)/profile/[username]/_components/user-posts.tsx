@@ -1,5 +1,7 @@
 'use client';
 
+import { TentTree } from 'lucide-react';
+
 import PostCard from '@/components/post-card';
 import { useUserPosts } from '@/hooks/use-user-posts';
 
@@ -24,7 +26,14 @@ export default function UserPosts({ username }: Properties) {
   }
 
   if (!userPosts || userPosts.length === 0) {
-    return <p>User has no post.</p>;
+    return (
+      <div className="flex w-full items-center justify-center gap-4 pt-10">
+        <TentTree size={32} />
+        <h3 className="text-center text-3xl font-semibold">
+          User has no post.
+        </h3>
+      </div>
+    );
   }
 
   return (
