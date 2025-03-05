@@ -9,7 +9,7 @@ type ReturnType = {
   posts: Post[];
 };
 
-export const useFeedPosts = () => {
+export function useFeedPosts() {
   const { data, error, isPending, isError } = useQuery<ReturnType>({
     queryKey: ['feedPosts'],
     queryFn: async () => {
@@ -34,4 +34,4 @@ export const useFeedPosts = () => {
     isPending,
     isError,
   };
-};
+}
