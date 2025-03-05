@@ -1,28 +1,32 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+'use client';
 
-import FollowingFeed from './_components/following-feed';
-import ForYouFeed from './_components/for-you-feed';
+import PostCard from '@/components/post-card';
+import { useFeedPosts } from '@/hooks/use-feed-posts';
 
 export default function HomePage() {
-  return (
-    <section className="mx-auto w-11/12 sm:w-full">
-      <Tabs defaultValue="foryou">
-        <TabsList className="w-full">
-          <TabsTrigger className="flex-1" value="foryou">
-            For You
-          </TabsTrigger>
-          <TabsTrigger className="flex-1" value="following">
-            Following
-          </TabsTrigger>
-        </TabsList>
+  const { posts, isPending, isError, error } = useFeedPosts();
 
-        <TabsContent value="foryou">
-          <ForYouFeed />
-        </TabsContent>
-        <TabsContent value="following">
-          <FollowingFeed />
-        </TabsContent>
-      </Tabs>
+  if (isPending) {
+    return <h2>Loading...</h2>;
+  }
+  if (isError) {
+    return <h2>{error?.message}</h2>;
+  }
+  if (!posts) {
+    return (
+      <h2>No posts to show. Follow some users to see their posts here!</h2>
+    );
+  }
+
+  return (
+    <section className="space-y-4 py-4">
+      {posts.map((post) => (
+        <PostCard key={post._id} post={post}>
+          <PostCard.Header />
+          <PostCard.Content />
+          <PostCard.Interaction />
+        </PostCard>
+      ))}
     </section>
   );
 }
